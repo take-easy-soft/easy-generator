@@ -1,0 +1,151 @@
+{
+	"type": "object",
+	"properties": {
+		"package": {
+			"type": "string"
+		},
+		"controllerName": {
+			"type": "string"
+		},
+		"controllerMapping": {
+			"type": "string"
+		},
+		"url": {
+			"type": "string"
+		},
+		"author": {
+			"type": "string"
+		},
+		"methodType": {
+			"type": "string"
+		},
+		"methodName": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"inColumns": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"isArray": {
+						"type": "boolean"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"String",
+							"Boolean",
+							"Object",
+							"enum",
+							"Integer",
+							"BigDecimal",
+							"Double",
+							"Long",
+							"Date"
+						]
+					},
+					"name": {
+						"type": "string"
+					},
+					"doc": {
+						"type": "string"
+					},
+					"children": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"isArray": {
+									"type": "boolean"
+								},
+								"type": {
+									"type": "string",
+									"enum": [
+										"String",
+										"Boolean",
+										"enum",
+										"Integer",
+										"BigDecimal",
+										"Double",
+										"Long",
+										"Date"
+									]
+								},
+								"name": {
+									"type": "string"
+								},
+								"doc": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"outColumns": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"isArray": {
+						"type": "boolean"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"String",
+							"Boolean",
+							"Object",
+							"enum",
+							"Integer",
+							"BigDecimal",
+							"Double",
+							"Long",
+							"Date"
+						]
+					},
+					"name": {
+						"type": "string"
+					},
+					"doc": {
+						"type": "string"
+					},
+					"children": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"isArray": {
+									"type": "boolean"
+								},
+								"type": {
+									"type": "string",
+									"enum": [
+										"String",
+										"Boolean",
+										"enum",
+										"Integer",
+										"BigDecimal",
+										"Double",
+										"Long",
+										"Date"
+									]
+								},
+								"name": {
+									"type": "string"
+								},
+								"doc": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

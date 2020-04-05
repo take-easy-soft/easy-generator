@@ -1,0 +1,11 @@
+<%
+    let api = data;
+    let responseClassName = firstLetter2UpperCase(api.name) + "VO";
+%>
+    /**
+     * <%=api.desc%>
+     *
+     */
+    public <%=responseClassName%> <%=api.name%>(){
+
+    }

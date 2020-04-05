@@ -1,0 +1,25 @@
+package <%=package%>;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+
+/**
+ * <%=description%>
+ *
+ * @author <%=author%>
+ * @date <%=date%>
+ */
+
+@AllArgsConstructor
+public enum <%=name%> {
+	<% for(i=0;i < columns.length;i++){%>
+	/**
+	*	<%= columns[i].doc%>
+	**/
+	<%=columns[i].name%>("<%=columns[i].value%>)<% if (i != columns.length -1 ) {%>,<%}%>	
+	<% } %>
+	;
+
+    public final String value;
+}

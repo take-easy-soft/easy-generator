@@ -1,0 +1,55 @@
+package <%=package%>;
+
+import lombok.Data;
+import java.util.Date;
+import java.util.List;
+<% if (type == "out") { %>
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor<%}%>
+<% for(i=0 ; i < enumPackages.length;i++ ){ %>import <%=enumPackages[i]%>;
+<%}%>
+
+/**
+ * <%=description%>
+ *
+ * @author <%=author%>
+ * @date <%=date%>
+ */
+
+
+@Data
+<% if (type == "out") { %>
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor<%}%>
+public class <%=name%> {
+	<% for(i=0;i < columns.length;i++){%>
+	/**
+	*	<%= columns[i].doc%>
+	**/
+	<% if (columns[i].type != "Object" ) { %>
+	<% if (columns[i].type == "enum" ) { %>
+	private <%= columns[i].enums.name%> <%= columns[i].name%>;
+	<%} else {%>
+	private <% if (JSON.stringify(columns[i].isArray) != "{}" && columns[i].isArray  ){  %> List<<%= columns[i].type%>> <%} else {%>  <%= columns[i].type%> <%}%> <%=columns[i].name%>;
+	<%}%>
+	<% } else if (columns[i].type == "Object" ) { %>
+	private <% if (JSON.stringify(columns[i].isArray) != "{}" && columns[i].isArray  ){  %> List<<%= columns[i].name.charAt(0).toUpperCase() + columns[i].name.slice(1) %>> <%} else {%>  <%= columns[i].name.charAt(0).toUpperCase() + columns[i].name.slice(1) %> <%}%> <%= columns[i].name%>;
+	@Data	
+	public static class <%= columns[i].name.charAt(0).toUpperCase() + columns[i].name.slice(1) %> {
+		<% for(j=0; j<columns[i].children.length;j++){%>
+		/**
+		*	<%=columns[i].children[j].doc%>
+		**/
+		<% if (columns[i].children[j].type == "enum" ) { %>
+		private <%=columns[i].children[j].enums.name%>  <%=columns[i].children[j].name%>;
+		<%} else {%>
+		private <% if (JSON.stringify(columns[i].children[j].isArray) != "{}" && columns[i].children[j].isArray  ){  %> List<<%=columns[i].children[j].type%>> <%} else {%> <%=columns[i].children[j].type%> <%}%> <%=columns[i].children[j].name%>;
+		<%}%>
+		<%}%>
+	}
+	<% } %>
+	<%}%>
+
+}

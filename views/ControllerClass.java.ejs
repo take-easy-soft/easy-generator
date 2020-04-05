@@ -1,0 +1,83 @@
+<%
+    let data = {
+        "name": "organization",
+        "platform": "M",
+        "userType": "C",
+        "package": "com.etm.evaluation",
+        "author": "乌龙茶",
+        "desc": "C端移动端组织相关的接口",
+        "path": "/organization",
+        "apis": [
+            {
+                "name": "saveChildren",
+                "desc": "保存孩子",
+                "path": "/evaluation_and_customer",
+                "method": "POST",
+                "request": {
+                    "pathVar": [
+                        {
+                            "name": "id",
+                            "type": "String",
+                            "desc": "唯一标识"
+                        }
+                    ],
+                    "queryParam": [
+                        {
+                            "name": "organizationId",
+                            "type": "String",
+                            "desc": "组织ID"
+                        }
+                    ],
+                    "body": [
+
+                    ]
+                },
+                "response": {
+                    "body": [
+
+                    ]
+                }
+            },
+            {
+                "name": "haha"
+            }
+        ]
+
+    };
+%>
+<% include("Common") %>
+<%
+    var userType = data.userType === "C" ? "Client" : "";
+    var upperCaseName = firstLetter2UpperCase(data.name);
+    var lowerCaseName = firstLetter2LowerCase(data.name);
+    var controllerClassName = userType + upperCaseName + "Controller";
+    var managerClassName = upperCaseName + "Manager";
+    var managerVarName = lowerCaseName + "Manager";
+    var managerDefinition = managerClassName + " " + managerVarName;
+%>
+<%# 定义包名 %>
+package <%=data.package%>;
+<%# 导包语句 %>
+<%# 注释 %>
+/**
+ * <%=data.desc%>
+ *
+ * @author <%=data.author%>
+ * @date <%=Date().toLocaleString()%>
+ */
+@Validated
+@RestController
+@RequestMapping("<%=data.path%>")
+public class <%=controllerClassName%> {
+
+    private <%=managerDefinition%>;
+
+    public <%=controllerClassName%>(<%=managerDefinition%>){
+        <%=`this.${managerVarName} = ${managerVarName};`%>
+    }
+
+<% data.apis.forEach(function(api){ %>
+    <%- include("ControllerFunction.java.ejs", {data: api}); %>
+<% }); %>
+
+}
