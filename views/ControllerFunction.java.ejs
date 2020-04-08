@@ -1,11 +1,30 @@
 <%
     let api = data;
     let responseClassName = firstLetter2UpperCase(api.name) + "VO";
+    let param = "";
+    if(api.request){
+        let pathVarList = api.request.pathVar;
+        // 存在路径参数
+        if(pathVarList && pathVarList.length > 0){
+            pathVarList.forEach(pathVar => {
+                if(pathVar.valid){
+                    let valid = pathVar.valid;
+                    let regexp = valid.type==="Pattern"?`,regexp="${valid.regexp}"`:"";
+                    param += `@${valid.type}(message="${valid.message}"${regexp}) `;
+                }
+                param += `@PathVariable ${pathVar.type} ${pathVar.name}`;
+            })
+        }
+
+        //let queryParam = api.request.queryParam;
+        //let requestBody = api.request.requestBody;
+
+    }
 %>
     /**
      * <%=api.desc%>
      *
      */
-    public <%=responseClassName%> <%=api.name%>(){
+    public <%=responseClassName%> <%=api.name%>(<%-param%>){
 
     }

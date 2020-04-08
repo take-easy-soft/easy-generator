@@ -1,44 +1,40 @@
 {
-  "name": "organization",
+  "name": "valid",
   "desc": "C端移动端组织相关的接口",
-  "platform": "M",
-  "userType": "C",
-  "package": "com.etm.evaluation",
+  "platform": "P",
+  "userType": "B",
+  "package": "com.etm.example",
   "author": "乌龙茶",
-  "path": "/organization",
+  "path": "/valid",
   "apis": [
     {
-      "name": "saveChildren",
-      "desc": "保存孩子",
-      "path": "/evaluation_and_customer",
-      "method": "POST",
+      "name": "validPathVariable",
+      "desc": "校验路径参数",
+      "path": "/path_variable/{name}",
+      "method": "GET",
       "request": {
         "pathVar": [
           {
-            "name": "id",
+            "name": "name",
             "type": "String",
-            "desc": "唯一标识"
+            "desc": "名称",
+            "valid": {
+              "type": "pattern",
+              "pattern": "\\d{5}",
+              "message": "名称格式不正确"
+            }
           }
-        ],
-        "queryParam": [
-          {
-            "name": "organizationId",
-            "type": "String",
-            "desc": "组织ID"
-          }
-        ],
-        "body": [
-
         ]
       },
       "response": {
         "body": [
-
+          {
+            "name": "result",
+            "type": "String",
+            "desc": "结果"
+          }
         ]
       }
-    },
-    {
-      "name": "haha"
     }
   ]
 
