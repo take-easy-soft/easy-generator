@@ -28,7 +28,6 @@ public class <%=controllerClassName%> {
     public <%=controllerClassName%>(<%=managerDefinition%>){
         <%=`this.${managerVarName} = ${managerVarName};`%>
     }
-
 <% data.apis.forEach(function(api){ %>
     <%- include("ControllerFunction.java.ejs", {data: api}); %>
 <% }); %>

@@ -23,5 +23,26 @@
         }
     }
 
-
+    getAnnotationByValid = function(valid){
+        if(!valid){
+            return "";
+        }
+        let type = valid.type.toUpperCase();
+        let annotation = "";
+        switch (type) {
+            case "PATTERN": // pattern
+                annotation = `@Pattern(regexp="${valid.regexp.replace('\\','\\\\')}",`;
+                break;
+            case "NOTNULL": // not null
+                annotation = "@NotNull(";
+                break;
+            case "NOTBLANK": // not blank
+                annotation = "@NotBlank(";
+                break;
+        }
+        if(annotation){
+            annotation += `message="${valid.message}") `;
+        }
+        return annotation;
+    }
 %>

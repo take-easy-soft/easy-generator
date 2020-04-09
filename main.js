@@ -28,8 +28,67 @@ let data = {
 						"type": "String",
 						"desc": "名称",
 						"valid": {
-							"type": "NotNull",
+							"type": "Pattern",
+							"regexp": "\\d{5}",
 							"message": "名称格式不正确"
+						}
+					}
+				]
+			},
+			"response": {
+				"body": [
+					{
+						"name": "result",
+						"type": "String",
+						"desc": "结果"
+					}
+				]
+			}
+		},
+		{
+			"name": "validQueryParam",
+			"desc": "校验查询参数",
+			"path": "/query_param",
+			"method": "GET",
+			"request": {
+				"queryParam": [
+					{
+						"name": "organizationId",
+						"type": "String",
+						"desc": "组织ID",
+						"valid": {
+							"type": "pattern",
+							"pattern": "\\w{5}",
+							"message": "organizationId长度必须是5"
+						}
+					}
+				]
+			},
+			"response": {
+				"body": [
+					{
+						"name": "result",
+						"type": "String",
+						"desc": "结果"
+					}
+				]
+			}
+		},
+		{
+			"name": "validRequestBody",
+			"desc": "校验请求体参数",
+			"path": "/request_body",
+			"method": "POST",
+			"request": {
+				"body": [
+					{
+						"name": "organizationId",
+						"type": "String",
+						"desc": "组织ID",
+						"valid": {
+							"type": "pattern",
+							"pattern": "\\w{5}",
+							"message": "organizationId长度必须是5"
 						}
 					}
 				]

@@ -1,30 +1,42 @@
 <%
     let api = data;
-    let responseClassName = firstLetter2UpperCase(api.name) + "VO";
-    let param = "";
+    let paramClassPrefix = firstLetter2UpperCase(api.name);
+    let params = [];
+    let paramDescList = [];
     if(api.request){
         let pathVarList = api.request.pathVar;
-        // 存在路径参数
-        if(pathVarList && pathVarList.length > 0){
-            pathVarList.forEach(pathVar => {
-                if(pathVar.valid){
-                    let valid = pathVar.valid;
-                    let regexp = valid.type==="Pattern"?`,regexp="${valid.regexp}"`:"";
-                    param += `@${valid.type}(message="${valid.message}"${regexp}) `;
-                }
-                param += `@PathVariable ${pathVar.type} ${pathVar.name}`;
-            })
+        let queryParamList = api.request.queryParam;
+        let requestBodyList = api.request.body;
+
+        let hasPathVar = pathVarList && pathVarList.length > 0;
+        let hasQueryParam = queryParamList && queryParamList.length > 0;
+        let hasRequestBody = requestBodyList && requestBodyList.length > 0;
+        let hasQueryParamAndBody = hasQueryParam && hasRequestBody;
+
+        // 处理路径参数
+        if(hasPathVar){
+            params.push(...pathVarList.map(pathVar => getAnnotationByValid(pathVar.valid) + `@PathVariable ${pathVar.type} ${pathVar.name}`));
+            paramDescList.push(...pathVarList.map(pathVar => ({name:pathVar.name,desc:pathVar.desc})));
         }
 
-        //let queryParam = api.request.queryParam;
-        //let requestBody = api.request.requestBody;
-
+        // 如果queryParam和requestBody只存在一个，则DTO的名称为api.name+DTO
+        // 如果两者都存在，则两个DTO的名称分别为api.name+ParamDTO、api.name+BodyDTO
+        if(hasQueryParam){
+            params.push("@Valid " + paramClassPrefix + (hasQueryParamAndBody?"ParamDTO paramDTO":"DTO dto"));
+            paramDescList.push({name:hasQueryParamAndBody?"paramDTO":"dto",desc:hasQueryParamAndBody?"查询参数":"入参"});
+        }
+        if(hasRequestBody){
+            params.push("@Valid @RequestBody " + paramClassPrefix + (hasQueryParamAndBody?"BodyDTO bodyDTO":"DTO dto"));
+            paramDescList.push({name:hasQueryParamAndBody?"bodyDTO":"dto",desc:hasQueryParamAndBody?"请求体参数":"入参"});
+        }
     }
 %>
     /**
      * <%=api.desc%>
-     *
+     *<%paramDescList.forEach(paramDesc => {%>
+     <%-"* @param " + paramDesc.name + " " + paramDesc.desc;%><%});%>
+     * @return
      */
-    public <%=responseClassName%> <%=api.name%>(<%-param%>){
+    public <%=paramClassPrefix+"VO"%> <%=api.name%>(<%-params.join(", ")%>){
 
     }

@@ -24,6 +24,21 @@
               "message": "名称格式不正确"
             }
           }
+        ],
+        "queryParam": [
+          {
+            "name": "organizationId",
+            "type": "String",
+            "desc": "组织ID",
+            "valid": {
+              "type": "pattern",
+              "pattern": "\\w{5}",
+              "message": "organizationId长度必须是5"
+            }
+          }
+        ],
+        "body": [
+
         ]
       },
       "response": {
