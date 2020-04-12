@@ -11,8 +11,12 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "restart": true,
+            // 用于自动重启node
+            // "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
             "program": "${workspaceFolder}\\dist\\main.js",
-            "preLaunchTask": "npm: watch"
+            "preLaunchTask": "watch",
+            "protocol": "inspector",
         }
     ]
 }

@@ -4,6 +4,8 @@
   "description": "",
   "main": "export.js",
   "dependencies": {
+    "@types/express": "^4.17.6",
+    "body-parser": "^1.19.0",
     "config": "^3.3.1",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
@@ -15,11 +17,14 @@
     "@types/vscode": "^1.30.0",
     "@types/node": "^8.10.25",
     "tslint": "^5.15.0",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.3",
+    "nodemon": "^2.0.3"
   },
   "scripts": {
+    "watch": "tsc -watch -p ./",
     "compile": "tsc -p ./",
-    "generate":"npm run compile && node dist/main.js"
+    "generate":"npm run compile && node dist/main.js",
+    "debug": "nodemon --inspect ./dist/main.js"
   },
   "author": "",
   "license": "ISC"
