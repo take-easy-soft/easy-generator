@@ -1,11 +1,24 @@
 //模板
 let controllerTemplate = './ControllerClass.java.ejs';
+let dtoTemplate = './Dto.java.ejs';
+let voTemplate = './Vo.java.ejs';
 
 //加载
 let express = require('express');
 let app = express();
 let fs = require('fs');
 
+const outputPath = __dirname + "/out"
+if (!fs.existsSync(outputPath)) {
+	fs.mkdirSync(outputPath)
+}
+
+const firstLetter2UpperCase = function (word) {
+	if (!word) {
+		return word;
+	}
+	return word.replace(word[0], word[0].toUpperCase());
+}
 
 let data = {
 	"name": "valid",
@@ -107,11 +120,65 @@ let data = {
 
 };
 
-app.render(controllerTemplate, {data:data}, function (err, str) {
-	if (err) {
-		console.error(err);
-		return;
-	}
-	fs.writeFileSync("/Users/linqunxun/Downloads/Demo.java", str.trim());
-});
+function render(template, data, generatePath) {
 
+	if (!generatePath) generatePath = outputPath + "default.java"
+
+	app.render(template, data, function (err, str) {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		fs.writeFileSync(generatePath, str.trim());
+	});
+}
+
+
+function generateController(data) {
+	render(controllerTemplate, { data: data })
+
+}
+
+function generateDto(data) {
+	for (const api of data.apis) {
+		if (api.request) {
+			for (const variable in api.request) {
+				if (variable == "body") {
+					render(dtoTemplate, {
+						paramList: api.request[variable],
+						info: {
+							name: api.name,
+							desc: api.desc,
+							author: data.author,
+							package: data.package
+						}
+					}, `${outputPath}/${firstLetter2UpperCase(api.name)}Dto.java`)
+				}
+			}
+		}
+	}
+}
+
+function generateVo(data) {
+	for (const api of data.apis) {
+		if (api.request) {
+			for (const variable in api.response) {
+				if (variable == "body") {
+					render(voTemplate, {
+						paramList: api.response[variable],
+						info: {
+							name: api.name,
+							desc: api.desc,
+							author: data.author,
+							package: data.package
+						}
+					}, `${outputPath}/${firstLetter2UpperCase(api.name)}Vo.java`)
+				}
+			}
+		}
+	}
+}
+
+generateDto(data)
+generateVo(data)
+console.log(__dirname)
