@@ -122,7 +122,7 @@ let data = {
 
 function render(template, data, generatePath) {
 
-	if (!generatePath) generatePath = outputPath + "default.java"
+	if (!generatePath) generatePath = outputPath + "/default.java"
 
 	app.render(template, data, function (err, str) {
 		if (err) {
@@ -135,7 +135,7 @@ function render(template, data, generatePath) {
 
 
 function generateController(data) {
-	render(controllerTemplate, { data: data })
+	render(controllerTemplate, { data: data }, `${outputPath}/${firstLetter2UpperCase(data.name)}Controller.java`)
 
 }
 
@@ -179,6 +179,7 @@ function generateVo(data) {
 	}
 }
 
+generateController(data)
 generateDto(data)
 generateVo(data)
 console.log(__dirname)
