@@ -11,9 +11,15 @@
     "gulp": "^4.0.2",
     "gulp-ejs": "^5.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/vscode": "^1.30.0",
+    "@types/node": "^8.10.25",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc -p ./",
+    "generate":"npm run compile && node dist/main.js"
   },
   "author": "",
   "license": "ISC"
