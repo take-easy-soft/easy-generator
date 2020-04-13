@@ -43,7 +43,7 @@ export class Generator {
         for (const api of data.apis) {
             if (api.request) {
                 for (const variable in api.request) {
-                    if (variable == "body") {
+                    if (variable == "body" || variable == "queryParam") {
                         this.render(dtoTemplate, {
                             paramList: api.request[variable],
                             info: {
@@ -52,7 +52,7 @@ export class Generator {
                                 author: data.author,
                                 package: data.package
                             }
-                        }, `${this.path.dto}/${this.firstLetter2UpperCase(api.name)}Dto.java`)
+                        }, `${this.path.dto}/${this.firstLetter2UpperCase(api.name)}DTO.java`)
                     }
                 }
             }
@@ -72,7 +72,7 @@ export class Generator {
                                 author: data.author,
                                 package: data.package
                             }
-                        }, `${this.path.vo}/${this.firstLetter2UpperCase(api.name)}Vo.java`)
+                        }, `${this.path.vo}/${this.firstLetter2UpperCase(api.name)}VO.java`)
                     }
                 }
             }

@@ -1,7 +1,7 @@
-import { ApiType, Controller, Response, Request } from "../type/controller";
-import { ValidType } from "../type/valid";
+import { ApiType, Controller } from "./type/controller";
+import { ValidType } from "./type/valid";
 
-export const data: Controller = {
+export default {
     name: "valid",
     desc: "C端移动端组织相关的接口",
     platform: "P",
@@ -11,56 +11,40 @@ export const data: Controller = {
     path: "/valid",
     apis: [
         {
-            name: "validPathVariable",
+            name: "getUser",
             desc: "校验路径参数",
             path: "/path_variable/{name}",
             method: ApiType.GET,
             request: {
                 pathVar: {
-                    name: {
-                        type: "String",
+                    organizationId: {
+                        type: "Integer",
                         desc: "名称",
-                        valid: {
+                        valid: [{
                             type: ValidType.PATTERN,
                             regexp: "\\d{5}",
                             message: "名称格式不正确"
-                        }
+                        },{ type: ValidType.NOT_EMPTY }]
                     }
-                }
-            },
-            response: {
-                body: {
-                    result: { type: "string", desc: "结果" },
-                    message: { type: "string", desc: "附带详情" }
-                }
-            }
-        },
-        {
-            name: "validQueryParam",
-            desc: "校验查询参数",
-            path: "/query_param",
-            method: ApiType.GET,
-            request: {
-                queryParam: {
-                    organizationId: {
+                }, queryParam: {
+                    name: {
                         type: "String",
-                        desc: "组织ID",
+                        desc: "姓名",
                         valid: {
-                            type: ValidType.PATTERN,
-                            regexp: "\\w{5}",
-                            message: "organizationId长度必须是5"
+                            type: ValidType.NOT_EMPTY
                         }
+                    },
+                    age: {
+                        type: "Integer",
+                        desc: "年龄"
                     }
                 }
             },
             response: {
                 body: {
-                    result: {
-                        type: "String",
-                        desc: "结果"
-                    }
+                    result: { type: "String", desc: "结果" },
+                    message: { type: "String", desc: "附带详情" }
                 }
-
             }
         },
         {
@@ -95,4 +79,4 @@ export const data: Controller = {
         }
     ]
 
-};
+} as Controller;

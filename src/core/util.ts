@@ -41,7 +41,14 @@ export class Util {
         }
     }
 
-    public static getAnnotationByValid(validParam: Valid | Valid[], paramName: string) {
+    /**
+     * 根据检验参数实体生成对应的注解行
+     * @param validParam 检验参数实体,可为一个数组
+     * @param paramName 参数名, 用于生成对应的message
+     * @param separator 多个参数实体信息之间的分隔符
+     * @param atFirst 第一行是否使用分隔符
+     */
+    public static getAnnotationByValid(validParam: Valid | Valid[], paramName: string, separator: string,atFirst=false): string {
         if (!validParam) {
             return "";
         }
@@ -76,24 +83,27 @@ export class Util {
                     if (!valid.message) valid.message = `参数${paramName}不可为空字符串!`
                     break;
                 case ValidType.LENGTH:
-                    annotation = `${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max+"," : ""}`;
+                    annotation = `${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
                     if (!valid.message) valid.message = `参数${paramName}长度超过限制!`
                     break;
                 case ValidType.SIZE:
-                    annotation = `${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max+"," : ""}`;
+                    annotation = `${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
                     if (!valid.message) valid.message = `参数${paramName}大小超过限制!`
                     break;
             }
             if (annotation) {
                 annotation += `message="${valid.message}")`;
             }
-            if (index > 0) {
-                annotationList += `\n    `
+            if (index > 0 && atFirst && separator) {
+                annotationList += separator
+            }
+            if (index > 0 && separator) {
+                annotationList += separator
             }
             annotationList += annotation
         }
 
-        return annotationList;
+        return annotationList+" ";
     }
 
 }

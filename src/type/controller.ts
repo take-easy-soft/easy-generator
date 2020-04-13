@@ -13,7 +13,9 @@ export class Controller {
     path: string;
     /** api列表 */
     apis: Api[]
+    /** 暂时无用 */
     platform?: string;
+    /** 暂时无用 */
     userType?: string
 }
 
@@ -53,9 +55,15 @@ export class Request {
  * 请求实体参数
  */
 export class Param {
+    /** Java类型 */
     type: string;
+    /** 参数注释 */
     desc: string;
-    valid: Valid | Valid[];
+    /** 
+     * 参数验证,可空 
+     * PathVariable当前只支持一个Valid
+     */
+    valid?: Valid | Valid[];
 }
 
 /**

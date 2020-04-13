@@ -16,7 +16,7 @@
         
         // 处理路径参数
         if(hasPathVar){
-            params.push(...Object.keys(pathVar).map(name => util.getAnnotationByValid(pathVar[name].valid,name) + `@PathVariable ${pathVar[name].type} ${name}`));
+            params.push(...Object.keys(pathVar).map(name => util.getAnnotationByValid(pathVar[name].valid,name," ") + `@PathVariable ${pathVar[name].type} ${name}`));
             paramDescList.push(...Object.keys(pathVar).map(name => ({name,desc:pathVar[name].desc})));
         }
 
@@ -39,5 +39,6 @@
      * @return
      */
     public <%=paramClassPrefix+"VO"%> <%=api.name%>(<%-params.join(", ")%>){
-
+        // TODO 未实现
+        return null;
     }
