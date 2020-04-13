@@ -27,14 +27,12 @@ export class Api {
     method: ApiType;
     /** API 请求参数 */
     request: {
-        pathVar?: Param[];
-        queryParam?: Param[];
-        body?: Param[];
+        pathVar?: Request;
+        queryParam?: Request;
+        body?: Request;
     };
     /** API 响应实体 */
-    response: {
-        body: ResponseItem[]
-    };
+    response: { body: Response };
 }
 
 /**
@@ -45,20 +43,31 @@ export enum ApiType {
 }
 
 /**
- * 请求参数
+ * 请求实体
+ */
+export class Request {
+    [paramName: string]: Param
+}
+
+/**
+ * 请求实体参数
  */
 export class Param {
-    name: string;
     type: string;
     desc: string;
     valid: Valid | Valid[];
 }
 
+/**
+ * 响应实体
+ */
+export class Response {
+    [itemName: string]: ResponseItem
+}
+
 
 /** 响应实体项 */
 export class ResponseItem {
-    /** field名称 */
-    name: string;
     /** java类型 */
     type: string;
     /** 注释 */

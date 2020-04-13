@@ -11,11 +11,11 @@ import javax.validation.constraints.*;
  */
 @Data
 public class <%=util.firstLetter2UpperCase(info.name)%>Dto {
-    <% for(const param of paramList){ %>
+    <% for(const param in paramList){ %>
     /**
-     * <%=param.desc%>
+     * <%=paramList[param].desc%>
      */
-    <%-util.getAnnotationByValid(param.valid)%>
-    private <%=param.type%> <%=param.name%>;
+    <%-util.getAnnotationByValid(paramList[param].valid,param)%>
+    private <%=paramList[param].type%> <%=param%>;
     <% }; %>
 }

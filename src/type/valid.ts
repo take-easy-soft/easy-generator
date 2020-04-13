@@ -1,25 +1,18 @@
 export class Valid {
     type: string;
-    message: string;
+    message?: string;
+    /** 适用于Pattern类型 */
+    regexp?: string;
+    /** 适用于Max、Min类型 */
+    value?: number;
+    /** 适用于Length、Size类型 */
+    min?: number;
+    /** 适用于Length、Size类型 */
+    max?: number;
 }
 
-export class Pattern extends Valid {
-    regexp: string;
-}
-
-export class NotEmpty extends Valid {
-}
-
-export class NotBlank extends Valid {
-}
-
-export class NotNull extends Valid {
-}
-
-export class Max extends Valid {
-    value: number;
-}
-
-export class Min extends Valid {
-    value: string;
+export enum ValidType {
+    PATTERN = "@Pattern", NOT_EMPTY = "@NotEmpty", NOT_BLANK = "@NotBlank",
+    NOT_NULL = "@NotNull", MAX = "@Max", MIN = "@Min",
+    LENGTH = "@Length", SIZE = "@Size"
 }

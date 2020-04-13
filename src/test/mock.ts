@@ -1,5 +1,5 @@
-import { ApiType, Controller } from "../type/controller";
-import { Pattern } from "../type/valid";
+import { ApiType, Controller, Response, Request } from "../type/controller";
+import { ValidType } from "../type/valid";
 
 export const data: Controller = {
     name: "valid",
@@ -16,27 +16,23 @@ export const data: Controller = {
             path: "/path_variable/{name}",
             method: ApiType.GET,
             request: {
-                pathVar: [
-                    {
-                        name: "name",
+                pathVar: {
+                    name: {
                         type: "String",
                         desc: "名称",
                         valid: {
-                            type: "Pattern",
+                            type: ValidType.PATTERN,
                             regexp: "\\d{5}",
                             message: "名称格式不正确"
-                        } as Pattern
+                        }
                     }
-                ]
+                }
             },
             response: {
-                body: [
-                    {
-                        name: "result",
-                        type: "String",
-                        desc: "结果"
-                    }
-                ]
+                body: {
+                    result: { type: "string", desc: "结果" },
+                    message: { type: "string", desc: "附带详情" }
+                }
             }
         },
         {
@@ -45,27 +41,26 @@ export const data: Controller = {
             path: "/query_param",
             method: ApiType.GET,
             request: {
-                queryParam: [
-                    {
-                        name: "organizationId",
+                queryParam: {
+                    organizationId: {
                         type: "String",
                         desc: "组织ID",
                         valid: {
-                            type: "pattern",
+                            type: ValidType.PATTERN,
                             regexp: "\\w{5}",
                             message: "organizationId长度必须是5"
-                        } as Pattern
+                        }
                     }
-                ]
+                }
             },
             response: {
-                body: [
-                    {
-                        name: "result",
+                body: {
+                    result: {
                         type: "String",
                         desc: "结果"
                     }
-                ]
+                }
+
             }
         },
         {
@@ -74,27 +69,28 @@ export const data: Controller = {
             path: "/request_body",
             method: ApiType.POST,
             request: {
-                body: [
-                    {
-                        name: "organizationId",
+                body: {
+                    organizationId: {
                         type: "String",
                         desc: "组织ID",
-                        valid: {
-                            type: "pattern",
-                            regexp: "\\w{5}",
-                            message: "organizationId长度必须是5"
-                        } as Pattern
+                        valid: [
+                            { type: ValidType.PATTERN, regexp: "\\w{5}", message: "organizationId长度必须是5" },
+                            { type: ValidType.NOT_EMPTY },
+                            { type: ValidType.MAX, value: 20 },
+                            { type: ValidType.LENGTH, min: 3, max: 20 },
+                            { type: ValidType.SIZE, min: 5, max: 10 },
+                            { type: ValidType.NOT_BLANK }
+                        ]
                     }
-                ]
+                }
             },
             response: {
-                body: [
-                    {
-                        name: "result",
+                body: {
+                    result: {
                         type: "String",
                         desc: "结果"
                     }
-                ]
+                }
             }
         }
     ]

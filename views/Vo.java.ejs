@@ -11,10 +11,10 @@ import javax.validation.constraints.*;
  */
 @Data
 public class <%=util.firstLetter2UpperCase(info.name)%>Vo {
-    <% for(const param of paramList){ %>
+    <% for(const param in paramList){ %>
     /**
-     * <%=param.desc%>
+     * <%=paramList[param].desc%>
      */
-    private <%=param.type%> <%=param.name%>;
+    private <%=paramList[param].type%> <%=param%>;
     <% }; %>
 }

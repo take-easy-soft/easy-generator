@@ -15,6 +15,10 @@ export class Generator {
         this.initPath(currentPath)
     }
 
+    /**
+     * 开始进行生成
+     * @param data Controller数据
+     */
     public genrate(data: Controller) {
         this.generateController(data)
         this.generateDto(data)

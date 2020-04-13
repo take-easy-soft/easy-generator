@@ -4,19 +4,20 @@
     let params = [];
     let paramDescList = [];
     if(api.request){
-        let pathVarList = api.request.pathVar;
-        let queryParamList = api.request.queryParam;
-        let requestBodyList = api.request.body;
+        let pathVar = api.request.pathVar;
+        let queryParam = api.request.queryParam;
+        let requestBody = api.request.body;
 
-        let hasPathVar = pathVarList && pathVarList.length > 0;
-        let hasQueryParam = queryParamList && queryParamList.length > 0;
-        let hasRequestBody = requestBodyList && requestBodyList.length > 0;
+        let hasPathVar = pathVar && Object.keys(pathVar).length > 0;
+        let hasQueryParam = queryParam && Object.keys(queryParam).length > 0;
+        let hasRequestBody = requestBody && Object.keys(requestBody).length > 0;
         let hasQueryParamAndBody = hasQueryParam && hasRequestBody;
 
+        
         // 处理路径参数
         if(hasPathVar){
-            params.push(...pathVarList.map(pathVar => util.getAnnotationByValid(pathVar.valid) + `@PathVariable ${pathVar.type} ${pathVar.name}`));
-            paramDescList.push(...pathVarList.map(pathVar => ({name:pathVar.name,desc:pathVar.desc})));
+            params.push(...Object.keys(pathVar).map(name => util.getAnnotationByValid(pathVar[name].valid,name) + `@PathVariable ${pathVar[name].type} ${name}`));
+            paramDescList.push(...Object.keys(pathVar).map(name => ({name,desc:pathVar[name].desc})));
         }
 
         // 如果queryParam和requestBody只存在一个，则DTO的名称为api.name+DTO
