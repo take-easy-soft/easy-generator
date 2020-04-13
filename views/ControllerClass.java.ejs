@@ -1,8 +1,7 @@
-<% include("Common") %>
 <%
     var userType = data.userType === "C" ? "Client" : "";
-    var upperCaseName = firstLetter2UpperCase(data.name);
-    var lowerCaseName = firstLetter2LowerCase(data.name);
+    var upperCaseName = util.firstLetter2UpperCase(data.name);
+    var lowerCaseName = util.firstLetter2LowerCase(data.name);
     var controllerClassName = userType + upperCaseName + "Controller";
     var managerClassName = upperCaseName + "Manager";
     var managerVarName = lowerCaseName + "Manager";

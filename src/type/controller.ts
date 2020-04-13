@@ -1,55 +1,66 @@
+import { Valid } from "./valid";
+
 export class Controller {
+    /** ControlerName */
     name: string;
-    desc: string;
-    platform: string;
-    userType: string
+    /** 包名 */
     package: string
+    /** Controller注释 */
+    desc: string;
+    /** 创建者 */
     author: string;
+    /** 默认路径 */
     path: string;
+    /** api列表 */
     apis: Api[]
+    platform?: string;
+    userType?: string
 }
 
+/**
+ * 请求
+ */
 export class Api {
     name: string;
     desc: string;
     path: string;
     method: ApiType;
-    request: Request;
-    response: Response;
+    /** API 请求参数 */
+    request: {
+        pathVar?: Param[];
+        queryParam?: Param[];
+        body?: Param[];
+    };
+    /** API 响应实体 */
+    response: {
+        body: ResponseItem[]
+    };
 }
 
+/**
+ * API类型
+ */
 export enum ApiType {
-    GET="GET", POST="POST", PUT="PUT", DELETE="DELETE"
+    GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE"
 }
 
-export class Request {
-    pathVar?: Param[];
-    queryParam?: Param[];
-    body?: Param[];
-}
-
+/**
+ * 请求参数
+ */
 export class Param {
     name: string;
     type: string;
     desc: string;
-    valid: Valid;
+    valid: Valid | Valid[];
 }
 
-export class Response {
-    body: ResponseItem[]
-}
 
+/** 响应实体项 */
 export class ResponseItem {
-    /**field名称 */
+    /** field名称 */
     name: string;
-    /**java类型 */
+    /** java类型 */
     type: string;
-    /**注释 */
+    /** 注释 */
     desc: string;
-}
-
-export class Valid{
-    type:string;
-    regexp:string;
-    message:string;
 }

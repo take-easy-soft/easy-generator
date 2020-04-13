@@ -1,7 +1,7 @@
-<% include("Common") %>
 package <%=info.package%>;
 
-<%# TODO 导入注解类 %>
+import lombok.Data;
+import javax.validation.constraints.*;
 
 /**
  * <%=info.desc%>请求响应实体
@@ -10,7 +10,7 @@ package <%=info.package%>;
  * @date <%=Date().toLocaleString()%>
  */
 @Data
-public class <%=firstLetter2UpperCase(info.name)%>Vo {
+public class <%=util.firstLetter2UpperCase(info.name)%>Vo {
     <% for(const param of paramList){ %>
     /**
      * <%=param.desc%>

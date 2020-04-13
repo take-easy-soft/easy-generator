@@ -1,7 +1,7 @@
-import * as fs from 'fs';
 import express = require('express');
-
+import * as fs from 'fs';
 import { Controller } from '../type/controller';
+import { Util as util, Util } from "./util";
 
 //模板
 const controllerTemplate = './ControllerClass.java.ejs';
@@ -9,20 +9,17 @@ const dtoTemplate = './Dto.java.ejs';
 const voTemplate = './Vo.java.ejs';
 
 export class Generator {
-
-    private outputPath: string;
+    private path: { controller: string; dto: string; vo: string; };
     private app = express();
-    constructor(private workspacePath: string) {
-        this.outputPath = this.workspacePath + "/../out"
-        if (!fs.existsSync(this.outputPath)) {
-            fs.mkdirSync(this.outputPath)
-        }
+    constructor(currentPath: string) {
+        this.initPath(currentPath)
     }
 
     public genrate(data: Controller) {
         this.generateController(data)
         this.generateDto(data)
         this.generateVo(data)
+        console.log("generate end.")
     }
 
     private firstLetter2UpperCase = function (word: string) {
@@ -34,7 +31,7 @@ export class Generator {
 
 
     private generateController(data: Controller) {
-        this.render(controllerTemplate, { data: data }, `${this.outputPath}/${this.firstLetter2UpperCase(data.name)}Controller.java`)
+        this.render(controllerTemplate, { data: data }, `${this.path.controller}/${this.firstLetter2UpperCase(data.name)}Controller.java`)
 
     }
 
@@ -51,7 +48,7 @@ export class Generator {
                                 author: data.author,
                                 package: data.package
                             }
-                        }, `${this.outputPath}/${this.firstLetter2UpperCase(api.name)}Dto.java`)
+                        }, `${this.path.dto}/${this.firstLetter2UpperCase(api.name)}Dto.java`)
                     }
                 }
             }
@@ -71,7 +68,7 @@ export class Generator {
                                 author: data.author,
                                 package: data.package
                             }
-                        }, `${this.outputPath}/${this.firstLetter2UpperCase(api.name)}Vo.java`)
+                        }, `${this.path.vo}/${this.firstLetter2UpperCase(api.name)}Vo.java`)
                     }
                 }
             }
@@ -80,10 +77,10 @@ export class Generator {
 
     private render(template: string, data: any, generatePath: string) {
 
-        if (!generatePath) generatePath = this.outputPath + "/default.java"
+        if (!generatePath) throw new Error("路径不可为空!");
 
         // return new Promise(resolve => {
-        this.app.render(template, data, async (err, str) => {
+        this.app.render(template, { ...data, util }, async (err, str) => {
             if (err) {
                 console.error(err);
                 return;
@@ -91,6 +88,22 @@ export class Generator {
             fs.writeFileSync(generatePath, str.trim());
         });
         // })
+    }
+
+    /**
+     * 重置输出文件夹
+     */
+    private initPath(currentPath: string) {
+        this.path = {
+            controller: currentPath + "/../out/controller",
+            dto: currentPath + "/../out/dto", vo: currentPath + "/../out/vo"
+        }
+        const output = currentPath + "/../out"
+        Util.deleteFolderRecursive(output)
+        fs.mkdirSync(output)
+        fs.mkdirSync(this.path.dto)
+        fs.mkdirSync(this.path.controller)
+        fs.mkdirSync(this.path.vo)
     }
 
 }

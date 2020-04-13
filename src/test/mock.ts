@@ -1,4 +1,5 @@
 import { ApiType, Controller } from "../type/controller";
+import { Pattern } from "../type/valid";
 
 export const data: Controller = {
     name: "valid",
@@ -24,7 +25,7 @@ export const data: Controller = {
                             type: "Pattern",
                             regexp: "\\d{5}",
                             message: "名称格式不正确"
-                        }
+                        } as Pattern
                     }
                 ]
             },
@@ -53,7 +54,7 @@ export const data: Controller = {
                             type: "pattern",
                             regexp: "\\w{5}",
                             message: "organizationId长度必须是5"
-                        }
+                        } as Pattern
                     }
                 ]
             },
@@ -82,7 +83,7 @@ export const data: Controller = {
                             type: "pattern",
                             regexp: "\\w{5}",
                             message: "organizationId长度必须是5"
-                        }
+                        } as Pattern
                     }
                 ]
             },

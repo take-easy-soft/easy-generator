@@ -23,8 +23,9 @@
   "scripts": {
     "watch": "tsc -watch -p ./",
     "compile": "tsc -p ./",
-    "generate":"npm run compile && node dist/main.js",
-    "debug": "nodemon --inspect ./dist/main.js"
+    "generate": "npm run compile && npm run start",
+    "debug": "nodemon --inspect ./dist/main.js",
+    "start": "node dist/main.js"
   },
   "author": "",
   "license": "ISC"
