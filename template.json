@@ -1,0 +1,89 @@
+{
+    "$schema": "http://engineering.etmcn.com:11000/etm-pro/document/raw/master/settings/schema.json",
+    "name": "Test",
+    "desc": "实例Controler",
+    "package": "com.etm.test",
+    "author": "etmgen",
+    "path": "/test",
+    "apis": [
+        {
+            "name": "example",
+            "desc": "实例请求",
+            "method": "POST",
+            "path": "/example",
+            "request": {
+                "body": {
+                    "isList": false,
+                    "name": {
+                        "desc": "姓名",
+                        "type": "String",
+                        "valid": [
+                            {
+                                "type": "NotNull"
+                            },
+                            {
+                                "type": "NotEmpty"
+                            }
+                        ]
+                    },
+                    "age": {
+                        "desc": "年龄",
+                        "type": "Integer"
+                    },
+                    "number": {
+                        "desc": "编号",
+                        "isList": true,
+                        "type": "Integer"
+                    }
+                }
+            },
+            "response": {
+                "body": {
+                    "isList": false,
+                    "message": {
+                        "desc": "信息",
+                        "type": "String"
+                    },
+                    "content": {
+                        "desc": "附加内容,内部实体",
+                        "type": "Object",
+                        "sub": {
+                            "isList": true,
+                            "content": {
+                                "desc": "任意内容",
+                                "type": "String"
+                            },
+                            "id": {
+                                "desc": "id",
+                                "type": "Integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "pathExample",
+            "desc": "路径请求",
+            "method": "GET",
+            "path": "/path/{id}",
+            "request": {
+                "pathVar": {
+                    "age": {
+                        "desc": "年龄",
+                        "type": "Integer"
+                    }
+                }
+            },
+            "response": {
+                "body": {
+                    "isList": true,
+                    "message": {
+                        "desc": "内容",
+                        "type": "String"
+                    }
+                }
+            }
+        }
+    ]
+}
