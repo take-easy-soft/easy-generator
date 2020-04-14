@@ -1,5 +1,6 @@
 export class Valid {
-    type: string;
+    type: ValidType;
+    /** 保存信息, 非Pattern使用自动生成即可 */
     message?: string;
     /** 适用于Pattern类型 */
     regexp?: string;

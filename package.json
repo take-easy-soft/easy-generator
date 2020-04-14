@@ -26,7 +26,7 @@
     "generate": "npm run compile && npm run start",
     "debug": "nodemon --inspect ./dist/main.js",
     "start": "node dist/main.js ",
-    "schema": "typescript-json-schema \"./src/type/*.ts\" Controller>res/schema.json"
+    "schema": "typescript-json-schema --titles --id etmgen --refs false --required \"./src/type/*.ts\" Controller>res/schema.json"
   },
   "author": "",
   "license": "ISC"

@@ -1,13 +1,11 @@
 {
-    "$schema": "./scheme.json",
+    "$schema": "https://github.com/take-easy-soft/easy-generator/raw/master/res/schema.json",
     "name": "Test",
     "desc": "测试Controler",
     "package": "com.etm.test",
-    "author": "乌龙茶",
+    "author": "etmgen",
     "path": "/test",
-    "apis": [{
-        
-    },
+    "apis": [
         {
             "name": "getUser",
             "desc": "校验路径参数",

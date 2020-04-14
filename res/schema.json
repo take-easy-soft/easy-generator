@@ -1,179 +1,521 @@
 {
+    "$id": "etmgen",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "Api": {
-            "description": "请求",
-            "properties": {
-                "desc": {
-                    "type": "string"
-                },
-                "method": {
-                    "$ref": "#/definitions/ApiType"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "path": {
-                    "type": "string"
-                },
-                "request": {
-                    "description": "API 请求参数",
-                    "properties": {
-                        "body": {
-                            "$ref": "#/definitions/Request"
-                        },
-                        "pathVar": {
-                            "$ref": "#/definitions/Request"
-                        },
-                        "queryParam": {
-                            "$ref": "#/definitions/Request"
-                        }
-                    },
-                    "type": "object"
-                },
-                "response": {
-                    "description": "API 响应实体",
-                    "properties": {
-                        "body": {
-                            "$ref": "#/definitions/Response"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "ApiType": {
-            "description": "API类型",
-            "enum": [
-                "DELETE",
-                "GET",
-                "POST",
-                "PUT"
-            ],
-            "type": "string"
-        },
-        "Param": {
-            "description": "请求实体参数",
-            "properties": {
-                "desc": {
-                    "description": "参数注释",
-                    "type": "string"
-                },
-                "type": {
-                    "description": "Java类型",
-                    "type": "string"
-                },
-                "valid": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/Valid"
-                        },
-                        {
-                            "items": {
-                                "$ref": "#/definitions/Valid"
-                            },
-                            "type": "array"
-                        }
-                    ],
-                    "description": "参数验证,可空 \nPathVariable当前只支持一个Valid"
-                }
-            },
-            "type": "object"
-        },
-        "Request": {
-            "additionalProperties": {
-                "$ref": "#/definitions/Param"
-            },
-            "description": "请求实体",
-            "type": "object"
-        },
-        "Response": {
-            "additionalProperties": {
-                "$ref": "#/definitions/ResponseItem"
-            },
-            "description": "响应实体",
-            "type": "object"
-        },
-        "ResponseItem": {
-            "description": "响应实体项",
-            "properties": {
-                "desc": {
-                    "description": "注释",
-                    "type": "string"
-                },
-                "type": {
-                    "description": "java类型",
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "Valid": {
-            "properties": {
-                "max": {
-                    "description": "适用于Length、Size类型",
-                    "type": "number"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "min": {
-                    "description": "适用于Length、Size类型",
-                    "type": "number"
-                },
-                "regexp": {
-                    "description": "适用于Pattern类型",
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "value": {
-                    "description": "适用于Max、Min类型",
-                    "type": "number"
-                }
-            },
-            "type": "object"
-        }
-    },
     "properties": {
         "apis": {
             "description": "api列表",
             "items": {
-                "$ref": "#/definitions/Api"
+                "description": "请求实体",
+                "properties": {
+                    "desc": {
+                        "description": "请求方法注释",
+                        "title": "desc",
+                        "type": "string"
+                    },
+                    "method": {
+                        "description": "请求类型",
+                        "enum": [
+                            "DELETE",
+                            "GET",
+                            "POST",
+                            "PUT"
+                        ],
+                        "title": "method",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "请求方法名称",
+                        "title": "name",
+                        "type": "string"
+                    },
+                    "path": {
+                        "description": "请求路径",
+                        "title": "path",
+                        "type": "string"
+                    },
+                    "request": {
+                        "description": "API 请求参数",
+                        "properties": {
+                            "body": {
+                                "additionalProperties": {
+                                    "description": "请求实体参数",
+                                    "properties": {
+                                        "desc": {
+                                            "description": "参数注释",
+                                            "title": "desc",
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "description": "Java类型",
+                                            "title": "type",
+                                            "type": "string"
+                                        },
+                                        "valid": {
+                                            "anyOf": [
+                                                {
+                                                    "properties": {
+                                                        "max": {
+                                                            "description": "适用于Length、Size类型",
+                                                            "title": "max",
+                                                            "type": "number"
+                                                        },
+                                                        "message": {
+                                                            "description": "保存信息, 非Pattern使用自动生成即可",
+                                                            "title": "message",
+                                                            "type": "string"
+                                                        },
+                                                        "min": {
+                                                            "description": "适用于Length、Size类型",
+                                                            "title": "min",
+                                                            "type": "number"
+                                                        },
+                                                        "regexp": {
+                                                            "description": "适用于Pattern类型",
+                                                            "title": "regexp",
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "enum": [
+                                                                "Length",
+                                                                "Max",
+                                                                "Min",
+                                                                "NotBlank",
+                                                                "NotEmpty",
+                                                                "NotNull",
+                                                                "Pattern",
+                                                                "Size"
+                                                            ],
+                                                            "title": "type",
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "description": "适用于Max、Min类型",
+                                                            "title": "value",
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "type"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "items": {
+                                                        "properties": {
+                                                            "max": {
+                                                                "description": "适用于Length、Size类型",
+                                                                "title": "max",
+                                                                "type": "number"
+                                                            },
+                                                            "message": {
+                                                                "description": "保存信息, 非Pattern使用自动生成即可",
+                                                                "title": "message",
+                                                                "type": "string"
+                                                            },
+                                                            "min": {
+                                                                "description": "适用于Length、Size类型",
+                                                                "title": "min",
+                                                                "type": "number"
+                                                            },
+                                                            "regexp": {
+                                                                "description": "适用于Pattern类型",
+                                                                "title": "regexp",
+                                                                "type": "string"
+                                                            },
+                                                            "type": {
+                                                                "enum": [
+                                                                    "Length",
+                                                                    "Max",
+                                                                    "Min",
+                                                                    "NotBlank",
+                                                                    "NotEmpty",
+                                                                    "NotNull",
+                                                                    "Pattern",
+                                                                    "Size"
+                                                                ],
+                                                                "title": "type",
+                                                                "type": "string"
+                                                            },
+                                                            "value": {
+                                                                "description": "适用于Max、Min类型",
+                                                                "title": "value",
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "type"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            ],
+                                            "description": "参数验证,可空 \nPathVariable当前只支持一个Valid",
+                                            "title": "valid"
+                                        }
+                                    },
+                                    "required": [
+                                        "desc",
+                                        "type"
+                                    ],
+                                    "type": "object"
+                                },
+                                "description": "body参数, 会创建一个Dto实体",
+                                "title": "body",
+                                "type": "object"
+                            },
+                            "pathVar": {
+                                "additionalProperties": {
+                                    "description": "请求实体参数",
+                                    "properties": {
+                                        "desc": {
+                                            "description": "参数注释",
+                                            "title": "desc",
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "description": "Java类型",
+                                            "title": "type",
+                                            "type": "string"
+                                        },
+                                        "valid": {
+                                            "anyOf": [
+                                                {
+                                                    "properties": {
+                                                        "max": {
+                                                            "description": "适用于Length、Size类型",
+                                                            "title": "max",
+                                                            "type": "number"
+                                                        },
+                                                        "message": {
+                                                            "description": "保存信息, 非Pattern使用自动生成即可",
+                                                            "title": "message",
+                                                            "type": "string"
+                                                        },
+                                                        "min": {
+                                                            "description": "适用于Length、Size类型",
+                                                            "title": "min",
+                                                            "type": "number"
+                                                        },
+                                                        "regexp": {
+                                                            "description": "适用于Pattern类型",
+                                                            "title": "regexp",
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "enum": [
+                                                                "Length",
+                                                                "Max",
+                                                                "Min",
+                                                                "NotBlank",
+                                                                "NotEmpty",
+                                                                "NotNull",
+                                                                "Pattern",
+                                                                "Size"
+                                                            ],
+                                                            "title": "type",
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "description": "适用于Max、Min类型",
+                                                            "title": "value",
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "type"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "items": {
+                                                        "properties": {
+                                                            "max": {
+                                                                "description": "适用于Length、Size类型",
+                                                                "title": "max",
+                                                                "type": "number"
+                                                            },
+                                                            "message": {
+                                                                "description": "保存信息, 非Pattern使用自动生成即可",
+                                                                "title": "message",
+                                                                "type": "string"
+                                                            },
+                                                            "min": {
+                                                                "description": "适用于Length、Size类型",
+                                                                "title": "min",
+                                                                "type": "number"
+                                                            },
+                                                            "regexp": {
+                                                                "description": "适用于Pattern类型",
+                                                                "title": "regexp",
+                                                                "type": "string"
+                                                            },
+                                                            "type": {
+                                                                "enum": [
+                                                                    "Length",
+                                                                    "Max",
+                                                                    "Min",
+                                                                    "NotBlank",
+                                                                    "NotEmpty",
+                                                                    "NotNull",
+                                                                    "Pattern",
+                                                                    "Size"
+                                                                ],
+                                                                "title": "type",
+                                                                "type": "string"
+                                                            },
+                                                            "value": {
+                                                                "description": "适用于Max、Min类型",
+                                                                "title": "value",
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "type"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            ],
+                                            "description": "参数验证,可空 \nPathVariable当前只支持一个Valid",
+                                            "title": "valid"
+                                        }
+                                    },
+                                    "required": [
+                                        "desc",
+                                        "type"
+                                    ],
+                                    "type": "object"
+                                },
+                                "description": "路径参数:/path/{param}, 会转为方法参数",
+                                "title": "pathVar",
+                                "type": "object"
+                            },
+                            "queryParam": {
+                                "additionalProperties": {
+                                    "description": "请求实体参数",
+                                    "properties": {
+                                        "desc": {
+                                            "description": "参数注释",
+                                            "title": "desc",
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "description": "Java类型",
+                                            "title": "type",
+                                            "type": "string"
+                                        },
+                                        "valid": {
+                                            "anyOf": [
+                                                {
+                                                    "properties": {
+                                                        "max": {
+                                                            "description": "适用于Length、Size类型",
+                                                            "title": "max",
+                                                            "type": "number"
+                                                        },
+                                                        "message": {
+                                                            "description": "保存信息, 非Pattern使用自动生成即可",
+                                                            "title": "message",
+                                                            "type": "string"
+                                                        },
+                                                        "min": {
+                                                            "description": "适用于Length、Size类型",
+                                                            "title": "min",
+                                                            "type": "number"
+                                                        },
+                                                        "regexp": {
+                                                            "description": "适用于Pattern类型",
+                                                            "title": "regexp",
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "enum": [
+                                                                "Length",
+                                                                "Max",
+                                                                "Min",
+                                                                "NotBlank",
+                                                                "NotEmpty",
+                                                                "NotNull",
+                                                                "Pattern",
+                                                                "Size"
+                                                            ],
+                                                            "title": "type",
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "description": "适用于Max、Min类型",
+                                                            "title": "value",
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "type"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "items": {
+                                                        "properties": {
+                                                            "max": {
+                                                                "description": "适用于Length、Size类型",
+                                                                "title": "max",
+                                                                "type": "number"
+                                                            },
+                                                            "message": {
+                                                                "description": "保存信息, 非Pattern使用自动生成即可",
+                                                                "title": "message",
+                                                                "type": "string"
+                                                            },
+                                                            "min": {
+                                                                "description": "适用于Length、Size类型",
+                                                                "title": "min",
+                                                                "type": "number"
+                                                            },
+                                                            "regexp": {
+                                                                "description": "适用于Pattern类型",
+                                                                "title": "regexp",
+                                                                "type": "string"
+                                                            },
+                                                            "type": {
+                                                                "enum": [
+                                                                    "Length",
+                                                                    "Max",
+                                                                    "Min",
+                                                                    "NotBlank",
+                                                                    "NotEmpty",
+                                                                    "NotNull",
+                                                                    "Pattern",
+                                                                    "Size"
+                                                                ],
+                                                                "title": "type",
+                                                                "type": "string"
+                                                            },
+                                                            "value": {
+                                                                "description": "适用于Max、Min类型",
+                                                                "title": "value",
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "type"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            ],
+                                            "description": "参数验证,可空 \nPathVariable当前只支持一个Valid",
+                                            "title": "valid"
+                                        }
+                                    },
+                                    "required": [
+                                        "desc",
+                                        "type"
+                                    ],
+                                    "type": "object"
+                                },
+                                "description": "query参数, 会创建一个Dto实体",
+                                "title": "queryParam",
+                                "type": "object"
+                            }
+                        },
+                        "title": "request",
+                        "type": "object"
+                    },
+                    "response": {
+                        "description": "API 响应实体",
+                        "properties": {
+                            "body": {
+                                "additionalProperties": {
+                                    "description": "响应实体项",
+                                    "properties": {
+                                        "desc": {
+                                            "description": "注释",
+                                            "title": "desc",
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "description": "java类型",
+                                            "title": "type",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "desc",
+                                        "type"
+                                    ],
+                                    "type": "object"
+                                },
+                                "description": "响应实体",
+                                "title": "body",
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "body"
+                        ],
+                        "title": "response",
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "desc",
+                    "method",
+                    "name",
+                    "path",
+                    "response"
+                ],
+                "type": "object"
             },
+            "title": "apis",
             "type": "array"
         },
         "author": {
             "description": "创建者",
+            "title": "author",
             "type": "string"
         },
         "desc": {
             "description": "Controller注释",
+            "title": "desc",
             "type": "string"
         },
         "name": {
             "description": "ControlerName",
+            "title": "name",
             "type": "string"
         },
         "package": {
             "description": "包名",
+            "title": "package",
             "type": "string"
         },
         "path": {
             "description": "默认路径",
+            "title": "path",
             "type": "string"
         },
         "platform": {
             "description": "暂时无用",
+            "title": "platform",
             "type": "string"
         },
         "userType": {
             "description": "暂时无用",
+            "title": "userType",
             "type": "string"
         }
     },
+    "required": [
+        "apis",
+        "author",
+        "desc",
+        "name",
+        "package",
+        "path"
+    ],
     "type": "object"
 }
 

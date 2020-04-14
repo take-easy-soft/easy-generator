@@ -20,17 +20,38 @@ export interface Controller {
 }
 
 /**
- * 请求
+ * 请求实体
  */
 export interface Api {
+    /**
+     * 请求方法名称
+     */
     name: string;
+    /**
+     * 请求方法注释
+     */
     desc: string;
+    /**
+     * 请求路径
+     */
     path: string;
+    /**
+     * 请求类型
+     */
     method: ApiType;
     /** API 请求参数 */
-    request: {
+    request?: {
+        /**
+         * 路径参数:/path/{param}, 会转为方法参数
+         */
         pathVar?: Request;
+        /**
+         * query参数, 会创建一个Dto实体
+         */
         queryParam?: Request;
+        /**
+         * body参数, 会创建一个Dto实体
+         */
         body?: Request;
     };
     /** API 响应实体 */
