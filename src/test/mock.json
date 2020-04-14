@@ -18,12 +18,12 @@
                         "desc": "名称",
                         "valid": [
                             {
-                                "type": "@Pattern",
+                                "type": "Pattern",
                                 "regexp": "\\d{5}",
                                 "message": "名称格式不正确"
                             },
                             {
-                                "type": "@NotEmpty"
+                                "type": "NotEmpty"
                             }
                         ]
                     }
@@ -33,7 +33,7 @@
                         "type": "String",
                         "desc": "姓名",
                         "valid": {
-                            "type": "@NotEmpty"
+                            "type": "NotEmpty"
                         }
                     },
                     "age": {
@@ -67,29 +67,29 @@
                         "desc": "组织ID",
                         "valid": [
                             {
-                                "type": "@Pattern",
+                                "type": "Pattern",
                                 "regexp": "\\w{5}",
                                 "message": "organizationId长度必须是5"
                             },
                             {
-                                "type": "@NotEmpty"
+                                "type": "NotEmpty"
                             },
                             {
-                                "type": "@Max",
+                                "type": "Max",
                                 "value": 20
                             },
                             {
-                                "type": "@Length",
+                                "type": "Length",
                                 "min": 3,
                                 "max": 20
                             },
                             {
-                                "type": "@Size",
+                                "type": "Size",
                                 "min": 5,
                                 "max": 10
                             },
                             {
-                                "type": "@NotBlank"
+                                "type": "NotBlank"
                             }
                         ]
                     }

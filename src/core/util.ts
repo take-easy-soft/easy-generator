@@ -59,42 +59,42 @@ export class Util {
             let annotation = "";
             switch (valid.type) {
                 case ValidType.PATTERN:
-                    annotation = `${valid.type}(regexp="${valid.regexp.replace('\\', '\\\\')}",`;
+                    annotation = `@${valid.type}(regexp="${valid.regexp.replace('\\', '\\\\')}",`;
                     if (!valid.message) valid.message = `参数${paramName}非法!`
                     break;
                 case ValidType.MIN:
-                    annotation = `${valid.type}(value="${valid.value}",`;
+                    annotation = `@${valid.type}(value="${valid.value}",`;
                     if (!valid.message) valid.message = `参数${paramName}小于最小长度!`
                     break;
                 case ValidType.MAX:
-                    annotation = `${valid.type}(value="${valid.value}",`;
+                    annotation = `@${valid.type}(value="${valid.value}",`;
                     if (!valid.message) valid.message = `参数${paramName}超过最大长度!`
                     break;
                 case ValidType.NOT_NULL:
-                    annotation = `${valid.type}(`;
+                    annotation = `@${valid.type}(`;
                     if (!valid.message) valid.message = `参数${paramName}不可为Null!`
                     break;
                 case ValidType.NOT_EMPTY:
-                    annotation = `${valid.type}(`;
+                    annotation = `@${valid.type}(`;
                     if (!valid.message) valid.message = `参数${paramName}不可为空!`
                     break;
                 case ValidType.NOT_BLANK:
-                    annotation = `${valid.type}(`;
+                    annotation = `@${valid.type}(`;
                     if (!valid.message) valid.message = `参数${paramName}不可为空字符串!`
                     break;
                 case ValidType.LENGTH:
-                    annotation = `${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
+                    annotation = `@${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
                     if (!valid.message) valid.message = `参数${paramName}长度超过限制!`
                     break;
                 case ValidType.SIZE:
-                    annotation = `${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
+                    annotation = `@${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
                     if (!valid.message) valid.message = `参数${paramName}大小超过限制!`
                     break;
             }
             if (annotation) {
                 annotation += `message="${valid.message}")`;
             }
-            if (index > 0 && atFirst && separator) {
+            if (index == 0 && atFirst && separator) {
                 annotationList += separator
             }
             if (index > 0 && separator) {

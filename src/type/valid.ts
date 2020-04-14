@@ -12,7 +12,7 @@ export class Valid {
 }
 
 export enum ValidType {
-    PATTERN = "@Pattern", NOT_EMPTY = "@NotEmpty", NOT_BLANK = "@NotBlank",
-    NOT_NULL = "@NotNull", MAX = "@Max", MIN = "@Min",
-    LENGTH = "@Length", SIZE = "@Size"
+    PATTERN = "Pattern", NOT_EMPTY = "NotEmpty", NOT_BLANK = "NotBlank",
+    NOT_NULL = "NotNull", MAX = "Max", MIN = "Min",
+    LENGTH = "Length", SIZE = "Size"
 }
