@@ -1,8 +1,7 @@
-<% include("Common") %>
 <%
     var userType = data.userType === "C" ? "Client" : "";
-    var upperCaseName = firstLetter2UpperCase(data.name);
-    var lowerCaseName = firstLetter2LowerCase(data.name);
+    var upperCaseName = util.firstLetter2UpperCase(data.name);
+    var lowerCaseName = util.firstLetter2LowerCase(data.name);
     var controllerClassName = userType + upperCaseName + "Controller";
     var managerClassName = upperCaseName + "Manager";
     var managerVarName = lowerCaseName + "Manager";
@@ -10,8 +9,10 @@
 %>
 <%# 定义包名 %>
 package <%=data.package%>;
-<%# 导包语句 %>
-<%# 注释 %>
+
+import javax.validation.constraints.*;
+import org.springframework.web.bind.annotation.*;
+
 /**
  * <%=data.desc%>
  *

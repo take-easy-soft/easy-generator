@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Main",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "restart": true,
+            // "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+            "program": "${workspaceFolder}\\dist\\main.js",
+            "args": ["D:\\git\\easy-generator\\src\\test\\mock.json"]
+            // "preLaunchTask": "watch"
+        }, {
+            "type": "node",
+            "request": "launch",
+            "name": "Test",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "restart": true,
+            "program": "${workspaceFolder}\\dist\\test\\test.js"
+        }
+    ]
+}

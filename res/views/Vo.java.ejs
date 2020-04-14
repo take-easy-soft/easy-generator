@@ -1,0 +1,20 @@
+package <%=info.package%>;
+
+import lombok.Data;
+import javax.validation.constraints.*;
+
+/**
+ * <%=info.desc%>请求响应实体
+ *
+ * @author <%=info.author%>
+ * @date <%=Date().toLocaleString()%>
+ */
+@Data
+public class <%=util.firstLetter2UpperCase(info.name)%>VO {
+    <% for(const param in paramList){ %>
+    /**
+     * <%=paramList[param].desc%>
+     */
+    private <%=paramList[param].type%> <%=param%>;
+    <% }; %>
+}
