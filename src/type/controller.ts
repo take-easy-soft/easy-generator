@@ -1,6 +1,6 @@
 import { Valid } from "./valid";
 
-export class Controller {
+export interface Controller {
     /** ControlerName */
     name: string;
     /** 包名 */
@@ -22,7 +22,7 @@ export class Controller {
 /**
  * 请求
  */
-export class Api {
+export interface Api {
     name: string;
     desc: string;
     path: string;
@@ -47,14 +47,14 @@ export enum ApiType {
 /**
  * 请求实体
  */
-export class Request {
+export interface Request {
     [paramName: string]: Param
 }
 
 /**
  * 请求实体参数
  */
-export class Param {
+export interface Param {
     /** Java类型 */
     type: string;
     /** 参数注释 */
@@ -69,13 +69,13 @@ export class Param {
 /**
  * 响应实体
  */
-export class Response {
+export interface Response {
     [itemName: string]: ResponseItem
 }
 
 
 /** 响应实体项 */
-export class ResponseItem {
+export interface ResponseItem {
     /** java类型 */
     type: string;
     /** 注释 */

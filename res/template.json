@@ -1,11 +1,13 @@
 {
+    "$schema": "./scheme.json",
     "name": "Test",
     "desc": "测试Controler",
-    "package": "sdocmsdf",
-    "platform": "P",
+    "package": "com.etm.test",
     "author": "乌龙茶",
     "path": "/test",
-    "apis": [
+    "apis": [{
+        
+    },
         {
             "name": "getUser",
             "desc": "校验路径参数",

@@ -1,0 +1,179 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Api": {
+            "description": "请求",
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "method": {
+                    "$ref": "#/definitions/ApiType"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "request": {
+                    "description": "API 请求参数",
+                    "properties": {
+                        "body": {
+                            "$ref": "#/definitions/Request"
+                        },
+                        "pathVar": {
+                            "$ref": "#/definitions/Request"
+                        },
+                        "queryParam": {
+                            "$ref": "#/definitions/Request"
+                        }
+                    },
+                    "type": "object"
+                },
+                "response": {
+                    "description": "API 响应实体",
+                    "properties": {
+                        "body": {
+                            "$ref": "#/definitions/Response"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "ApiType": {
+            "description": "API类型",
+            "enum": [
+                "DELETE",
+                "GET",
+                "POST",
+                "PUT"
+            ],
+            "type": "string"
+        },
+        "Param": {
+            "description": "请求实体参数",
+            "properties": {
+                "desc": {
+                    "description": "参数注释",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Java类型",
+                    "type": "string"
+                },
+                "valid": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Valid"
+                        },
+                        {
+                            "items": {
+                                "$ref": "#/definitions/Valid"
+                            },
+                            "type": "array"
+                        }
+                    ],
+                    "description": "参数验证,可空 \nPathVariable当前只支持一个Valid"
+                }
+            },
+            "type": "object"
+        },
+        "Request": {
+            "additionalProperties": {
+                "$ref": "#/definitions/Param"
+            },
+            "description": "请求实体",
+            "type": "object"
+        },
+        "Response": {
+            "additionalProperties": {
+                "$ref": "#/definitions/ResponseItem"
+            },
+            "description": "响应实体",
+            "type": "object"
+        },
+        "ResponseItem": {
+            "description": "响应实体项",
+            "properties": {
+                "desc": {
+                    "description": "注释",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "java类型",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Valid": {
+            "properties": {
+                "max": {
+                    "description": "适用于Length、Size类型",
+                    "type": "number"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "min": {
+                    "description": "适用于Length、Size类型",
+                    "type": "number"
+                },
+                "regexp": {
+                    "description": "适用于Pattern类型",
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "value": {
+                    "description": "适用于Max、Min类型",
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "apis": {
+            "description": "api列表",
+            "items": {
+                "$ref": "#/definitions/Api"
+            },
+            "type": "array"
+        },
+        "author": {
+            "description": "创建者",
+            "type": "string"
+        },
+        "desc": {
+            "description": "Controller注释",
+            "type": "string"
+        },
+        "name": {
+            "description": "ControlerName",
+            "type": "string"
+        },
+        "package": {
+            "description": "包名",
+            "type": "string"
+        },
+        "path": {
+            "description": "默认路径",
+            "type": "string"
+        },
+        "platform": {
+            "description": "暂时无用",
+            "type": "string"
+        },
+        "userType": {
+            "description": "暂时无用",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
+

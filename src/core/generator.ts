@@ -4,9 +4,9 @@ import { Controller } from '../type/controller';
 import { Util as util, Util } from "./util";
 
 //模板
-const controllerTemplate = __dirname + '/../../views/ControllerClass.java.ejs';
-const dtoTemplate = __dirname + '/../../views/Dto.java.ejs';
-const voTemplate = __dirname + '/../../views/Vo.java.ejs';
+const controllerTemplate = __dirname + '/../../res/views/ControllerClass.java.ejs';
+const dtoTemplate = __dirname + '/../../res/views/Dto.java.ejs';
+const voTemplate = __dirname + '/../../res/views/Vo.java.ejs';
 
 export class Generator {
     private path: { controller: string; dto: string; vo: string; };

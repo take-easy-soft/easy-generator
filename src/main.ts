@@ -6,7 +6,7 @@ import { Controller } from './type/controller';
 var args = process.argv.slice(2);
 const input = args[0];
 if (input && input.toLowerCase() == "new") {
-    fs.copyFileSync(__dirname+"/../template.json",process.cwd()+"/template.json")
+    fs.copyFileSync(__dirname+"/../res/template.json",process.cwd()+"/res/template.json")
     console.log("create template success!")
 } else if (input) {
 

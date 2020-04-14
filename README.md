@@ -2,10 +2,10 @@
 
 该版本使用TypeScript开发, 源码目录为src
 
-**使用步骤**
-1. npm install, 安装依赖
-2. 修改main.js中的data数据
-3. 开始生成: npm run generate, 生成文件在**out**目录
+**快速入门**
+1. npm install -g etmgen
+2. 打开控制台, 执行etmgen new, 这会在当前工作目录创建tempalte.json
+3. 执行etmgen tempalte.json, 开始生成, 文件在当前工作目录的generate
 
 **开发**
 1. npm run watch, 启动监听程序, 自动监听变动并进行编译, 这可加快开发速度
