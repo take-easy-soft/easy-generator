@@ -1,17 +1,16 @@
-import { ApiType, Controller } from "./type/controller";
-import { ValidType } from "./type/valid";
+import { ApiType, Controller } from "../type/controller";
+import { ValidType } from "../type/valid";
 
 export default {
-    name: "valid",
-    desc: "C端移动端组织相关的接口",
+    name:"sdf",
+    desc:"sdf",
+    package:"sdocmsdf",
     platform: "P",
-    userType: "B",
-    package: "com.etm.example",
     author: "乌龙茶",
     path: "/valid",
     apis: [
         {
-            name: "getUser",
+            name: "getUsersdfsd",
             desc: "校验路径参数",
             path: "/path_variable/{name}",
             method: ApiType.GET,

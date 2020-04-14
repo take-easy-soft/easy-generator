@@ -4,15 +4,15 @@ import { Controller } from '../type/controller';
 import { Util as util, Util } from "./util";
 
 //模板
-const controllerTemplate = './ControllerClass.java.ejs';
-const dtoTemplate = './Dto.java.ejs';
-const voTemplate = './Vo.java.ejs';
+const controllerTemplate = __dirname + '/../../views/ControllerClass.java.ejs';
+const dtoTemplate = __dirname + '/../../views/Dto.java.ejs';
+const voTemplate = __dirname + '/../../views/Vo.java.ejs';
 
 export class Generator {
     private path: { controller: string; dto: string; vo: string; };
     private app = express();
-    constructor(currentPath: string) {
-        this.initPath(currentPath)
+    constructor(workingPath: string) {
+        this.initPath(workingPath)
     }
 
     /**
@@ -99,10 +99,10 @@ export class Generator {
      */
     private initPath(currentPath: string) {
         this.path = {
-            controller: currentPath + "/../out/controller",
-            dto: currentPath + "/../out/dto", vo: currentPath + "/../out/vo"
+            controller: currentPath + "/generate/controller",
+            dto: currentPath + "/generate/dto", vo: currentPath + "/generate/vo"
         }
-        const output = currentPath + "/../out"
+        const output = currentPath + "/generate"
         Util.deleteFolderRecursive(output)
         fs.mkdirSync(output)
         fs.mkdirSync(this.path.dto)

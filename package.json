@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "etm",
   "version": "1.0.0",
   "description": "",
   "main": "export.js",
@@ -13,6 +13,7 @@
     "gulp": "^4.0.2",
     "gulp-ejs": "^5.0.0"
   },
+  "bin": "./dist/main.js",
   "devDependencies": {
     "@types/vscode": "^1.30.0",
     "@types/node": "^8.10.25",
@@ -21,11 +22,12 @@
     "nodemon": "^2.0.3"
   },
   "scripts": {
-    "watch": "tsc -watch -p ./",
     "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node dist/test/test.js",
     "generate": "npm run compile && npm run start",
     "debug": "nodemon --inspect ./dist/main.js",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js "
   },
   "author": "",
   "license": "ISC"

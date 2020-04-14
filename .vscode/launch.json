@@ -12,10 +12,19 @@
                 "<node_internals>/**"
             ],
             "restart": true,
-            // 用于自动重启node
             // "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
-            "program": "${workspaceFolder}\\dist\\main.js"
+            "program": "${workspaceFolder}\\dist\\main.js",
+            "args": ["D:\\git\\easy-generator\\src\\test\\mock.json"]
             // "preLaunchTask": "watch"
+        }, {
+            "type": "node",
+            "request": "launch",
+            "name": "Test",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "restart": true,
+            "program": "${workspaceFolder}\\dist\\test\\test.js"
         }
     ]
 }
