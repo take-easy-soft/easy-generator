@@ -1,5 +1,5 @@
 import { Render } from "../generator";
-import { ClassInfo, Param, Request } from '../../type/controller';
+import { ClassInfo, Field, Bean } from '../../type/controller';
 import { Util } from "../util";
 
 export class DTORender implements Render {
@@ -26,32 +26,32 @@ import java.util.*;
  */
 @Data
 public class ${Util.firstLetter2UpperCase(info.name)}DTO {
-${this.renderParamList(data as Request)}
+${this.renderParamList(data as Bean)}
 }`.replace(/^\s/, "");
     }
 
     /**
      * 构建Field和内部类列表
-     * @param request request对象
+     * @param bean Java实体对象
      */
-    private renderParamList(request: Request): string {
+    private renderParamList(bean: Bean): string {
         let paramContent: string = "";
-        for (const paramName in request) {
+        for (const fieldName in bean) {
             //TODO 数组需要额外处理,先跳过
-            if (paramName == "isList") continue;
-            const param = request[paramName] as Param
+            if (fieldName == "isList") continue;
+            const field = bean[fieldName] as Field
             //生成field信息
             paramContent += `
     /**
-     * ${param.desc}
-     */${param.sub?"\n    @Valid":Util.getAnnotationByValid(param.valid, paramName, "\n    ", true)}
-    private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type, param.isList)} ${paramName};\n`
+     * ${field.desc}
+     */${field.sub ? "\n    @Valid" : Util.getAnnotationByValid(field.valid, fieldName, "\n    ", true)}
+    private ${Util.wrapList(field.sub ? Util.firstLetter2UpperCase(fieldName) : field.type, field.isList)} ${fieldName};\n`
             //复杂类型, 生成内部类, 因为ejs递归会死循环, 只能使用字符串重构
-            if (param.sub) {
-                const sub = param.sub
+            if (field.sub) {
+                const sub = field.sub
                 paramContent += `
     @Data
-    public static class ${Util.firstLetter2UpperCase(paramName)}{
+    public static class ${Util.firstLetter2UpperCase(fieldName)}{
         ${this.renderParamList(sub)}
     } 
     `

@@ -15,12 +15,11 @@ export class ClassInfo {
     /** 默认路径 */
 }
 
-export class ListAble {
-    /** 是否为List, 只适用于根级属性 */
-    isList?: boolean = false
-}
-
 export class Controller extends ClassInfo {
+    /**
+     * 定义类型, 用于请求或响应复用
+     */
+    definitions: Bean[];
     path: string;
     /** api列表 */
     apis: Api[]
@@ -55,18 +54,18 @@ export class Api {
         /**
          * 路径参数:/path/{param}, 会转为方法参数
          */
-        pathVar?: Request;
+        pathVar?: Bean;
         /**
          * query参数, 会创建一个Dto实体
          */
-        queryParam?: Request;
+        queryParam?: Bean;
         /**
          * body参数, 会创建一个Dto实体
          */
-        body?: Request;
+        body?: Bean;
     };
     /** API 响应实体 */
-    response: { body: Response };
+    response: { body: Bean };
 }
 
 /**
@@ -77,45 +76,34 @@ export enum ApiType {
 }
 
 /**
- * 请求实体
+ * 请求或响应实体
  */
-export class Request extends ListAble {
-    [paramName: string]: Param | boolean
+export class Bean {
+    /**
+     * 是否支持显示为List
+     */
+    isList?: boolean;
+    [paramName: string]: Field | boolean
 }
 
 /**
  * 请求实体参数
  */
-export class Param extends ListAble {
+export class Field {
+    /**
+     * 是否支持显示为List
+     */
+    isList?: boolean
     /** Java类型 */
     type: Type;
     /** 子实体 */
-    sub?: Request;
+    sub?: Bean;
     /** 参数注释 */
     desc: string;
     /** 
-     * 参数验证,可空 
-     * PathVariable当前只支持一个Valid
+     * 参数验证,可空, 只对Dto生效
      */
     valid?: Valid | Valid[];
-}
-
-/**
- * 响应实体
- */
-export class Response extends ListAble {
-    [itemName: string]: ResponseItem | boolean
-}
-
-
-/** 响应实体项 */
-export class ResponseItem extends ListAble{
-    /** java类型 */
-    type: Type;
-    /** 子实体 */
-    sub?: Response;
-    /** 注释 */
-    desc: string;
 }
 
 export enum Type {

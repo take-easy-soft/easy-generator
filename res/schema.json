@@ -24,15 +24,15 @@
                     "description": "API 请求参数",
                     "properties": {
                         "body": {
-                            "$ref": "#/definitions/Request",
+                            "$ref": "#/definitions/Bean",
                             "description": "body参数, 会创建一个Dto实体"
                         },
                         "pathVar": {
-                            "$ref": "#/definitions/Request",
+                            "$ref": "#/definitions/Bean",
                             "description": "路径参数:/path/{param}, 会转为方法参数"
                         },
                         "queryParam": {
-                            "$ref": "#/definitions/Request",
+                            "$ref": "#/definitions/Bean",
                             "description": "query参数, 会创建一个Dto实体"
                         }
                     },
@@ -42,7 +42,7 @@
                     "description": "API 响应实体",
                     "properties": {
                         "body": {
-                            "$ref": "#/definitions/Response"
+                            "$ref": "#/definitions/Bean"
                         }
                     },
                     "required": [
@@ -70,7 +70,27 @@
             ],
             "type": "string"
         },
-        "Param": {
+        "Bean": {
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/Field"
+                    },
+                    {
+                        "type": "boolean"
+                    }
+                ]
+            },
+            "description": "请求或响应实体",
+            "properties": {
+                "isList": {
+                    "description": "是否支持显示为List",
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "Field": {
             "description": "请求实体参数",
             "properties": {
                 "desc": {
@@ -78,12 +98,11 @@
                     "type": "string"
                 },
                 "isList": {
-                    "default": false,
-                    "description": "是否为List, 只适用于根级属性",
+                    "description": "是否支持显示为List",
                     "type": "boolean"
                 },
                 "sub": {
-                    "$ref": "#/definitions/Request",
+                    "$ref": "#/definitions/Bean",
                     "description": "子实体"
                 },
                 "type": {
@@ -102,76 +121,7 @@
                             "type": "array"
                         }
                     ],
-                    "description": "参数验证,可空 \nPathVariable当前只支持一个Valid"
-                }
-            },
-            "required": [
-                "desc",
-                "type"
-            ],
-            "type": "object"
-        },
-        "Request": {
-            "additionalProperties": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/Param"
-                    },
-                    {
-                        "type": "boolean"
-                    }
-                ]
-            },
-            "description": "请求实体",
-            "properties": {
-                "isList": {
-                    "default": false,
-                    "description": "是否为List, 只适用于根级属性",
-                    "type": "boolean"
-                }
-            },
-            "type": "object"
-        },
-        "Response": {
-            "additionalProperties": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/ResponseItem"
-                    },
-                    {
-                        "type": "boolean"
-                    }
-                ]
-            },
-            "description": "响应实体",
-            "properties": {
-                "isList": {
-                    "default": false,
-                    "description": "是否为List, 只适用于根级属性",
-                    "type": "boolean"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseItem": {
-            "description": "响应实体项",
-            "properties": {
-                "desc": {
-                    "description": "注释",
-                    "type": "string"
-                },
-                "isList": {
-                    "default": false,
-                    "description": "是否为List, 只适用于根级属性",
-                    "type": "boolean"
-                },
-                "sub": {
-                    "$ref": "#/definitions/Response",
-                    "description": "子实体"
-                },
-                "type": {
-                    "$ref": "#/definitions/Type",
-                    "description": "java类型"
+                    "description": "参数验证,可空, 只对Dto生效"
                 }
             },
             "required": [
@@ -269,6 +219,11 @@
             "description": "暂时无用",
             "type": "string"
         },
+        "typeList": {
+            "items": {
+            },
+            "type": "array"
+        },
         "userType": {
             "description": "暂时无用",
             "type": "string"
@@ -280,7 +235,8 @@
         "desc",
         "name",
         "package",
-        "path"
+        "path",
+        "typeList"
     ],
     "type": "object"
 }
