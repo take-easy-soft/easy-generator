@@ -1,109 +1,86 @@
 {
     "$schema": "http://engineering.etmcn.com:11000/etm-pro/document/raw/master/settings/schema.json",
     "name": "Test",
-    "desc": "测试Controler",
+    "desc": "实例Controler",
     "package": "com.etm.test",
     "author": "etmgen",
     "path": "/test",
     "apis": [
         {
-            "name": "",
-            "desc": "校验路径参数",
-            "path": "/path_variable/{name}",
-            "method": "GET",
+            "name": "example",
+            "desc": "实例请求",
+            "method": "POST",
+            "path": "/example",
             "request": {
-                "pathVar": {
-                    "test":{
-                        "desc": "sdf",
-                        "type": ""
-                    },
-                    "organizationId": {
-                        "type": "Integer",
-                        "desc": "名称",
+                "body": {
+                    "isList": false,
+                    "name": {
+                        "desc": "姓名",
+                        "type": "String",
                         "valid": [
                             {
-                                "type": "Pattern",
-                                "regexp": "\\d{5}",
-                                "message": "名称格式不正确"
+                                "type": "NotNull"
                             },
                             {
-                                "type": "Min"
+                                "type": "NotEmpty"
                             }
                         ]
-                    }
-                },
-                "queryParam": {
-                    "name": {
-                        "type": "String",
-                        "desc": "姓名",
-                        "valid": {
-                            "type": "NotEmpty"
-                        }
                     },
                     "age": {
-                        "type": "Integer",
-                        "desc": "年龄"
+                        "desc": "年龄",
+                        "type": "Integer"
+                    },
+                    "number": {
+                        "desc": "编号",
+                        "isList": true,
+                        "type": "Integer"
                     }
                 }
             },
             "response": {
                 "body": {
-                    "result": {
-                        "type": "String",
-                        "desc": "结果"
-                    },
+                    "isList": false,
                     "message": {
-                        "type": "String",
-                        "desc": "附带详情"
+                        "desc": "信息",
+                        "type": "String"
+                    },
+                    "content": {
+                        "desc": "附加内容,内部实体",
+                        "type": "Object",
+                        "sub": {
+                            "isList": true,
+                            "content": {
+                                "desc": "任意内容",
+                                "type": "String"
+                            },
+                            "id": {
+                                "desc": "id",
+                                "type": "Integer"
+                            }
+                        }
                     }
                 }
             }
         },
         {
-            "name": "testRequestBody",
-            "desc": "测试RequestBody参数",
-            "path": "/requestBody",
-            "method": "POST",
+            "name": "pathExample",
+            "desc": "路径请求",
+            "method": "GET",
+            "path": "/path/{id}",
             "request": {
-                "body": {
-                    "organizationId": {
-                        "type": "String",
-                        "desc": "组织ID",
-                        "valid": [
-                            {
-                                "type": "Pattern",
-                                "regexp": "\\w{5}",
-                                "message": "organizationId长度必须是5"
-                            },
-                            {
-                                "type": "NotEmpty"
-                            },
-                            {
-                                "type": "Max",
-                                "value": 20
-                            },
-                            {
-                                "type": "Length",
-                                "min": 3,
-                                "max": 20
-                            },
-                            {
-                                "type": "Size",
-                                "min": 5,
-                                "max": 10
-                            },
-                            {
-                                "type": "NotBlank"
-                            }
-                        ]
+                "pathVar": {
+                    "age": {
+                        "desc": "年龄",
+                        "type": "Integer"
                     }
                 }
             },
             "response": {
                 "body": {
-                    "result": {
-                        "type": "String",
-                        "desc": "结果"
+                    "isList": true,
+                    "message": {
+                        "desc": "内容",
+                        "type": "String"
                     }
                 }
             }

@@ -79,6 +79,7 @@
                 },
                 "isList": {
                     "default": false,
+                    "description": "是否为List, 只适用于根级属性",
                     "type": "boolean"
                 },
                 "sub": {
@@ -125,6 +126,7 @@
             "properties": {
                 "isList": {
                     "default": false,
+                    "description": "是否为List, 只适用于根级属性",
                     "type": "boolean"
                 }
             },
@@ -145,6 +147,7 @@
             "properties": {
                 "isList": {
                     "default": false,
+                    "description": "是否为List, 只适用于根级属性",
                     "type": "boolean"
                 }
             },
@@ -159,6 +162,7 @@
                 },
                 "isList": {
                     "default": false,
+                    "description": "是否为List, 只适用于根级属性",
                     "type": "boolean"
                 },
                 "sub": {
