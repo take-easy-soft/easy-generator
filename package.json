@@ -1,7 +1,8 @@
 {
-  "name": "etm",
+  "name": "etmgen",
   "version": "1.0.0",
-  "description": "",
+  "description": "代码生成器",
+  "repository": "https://github.com/take-easy-soft/easy-generator",
   "main": "export.js",
   "dependencies": {
     "@types/express": "^4.17.6",

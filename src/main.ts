@@ -18,8 +18,8 @@ if (input && input.toLowerCase() == "new") {
     generator.genrate(JSON.parse(inputData) as Controller)
 
 } else {
-    console.log('Usage: etm <path>|new')
+    console.log('Usage: etmgen <path>|new')
     console.log('')
-    console.log('When You type etmp new, that will create template in current directory.')
+    console.log('When You type etmgen new, that will create template in current directory.')
 }
 
