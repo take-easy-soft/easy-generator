@@ -15,7 +15,11 @@ export class ClassInfo {
     /** 默认路径 */
 }
 
-export class Controller extends ClassInfo{
+export class ListAble {
+    isList?: boolean = false
+}
+
+export class Controller extends ClassInfo {
     path: string;
     /** api列表 */
     apis: Api[]
@@ -74,15 +78,14 @@ export enum ApiType {
 /**
  * 请求实体
  */
-export class Request {
-    [paramName: string]: Param | boolean,
-    isArray?: boolean = false
+export class Request extends ListAble {
+    [paramName: string]: Param | boolean
 }
 
 /**
  * 请求实体参数
  */
-export class Param {
+export class Param extends ListAble {
     /** Java类型 */
     type: Type;
     /** 子实体 */
@@ -99,14 +102,13 @@ export class Param {
 /**
  * 响应实体
  */
-export class Response {
-    [itemName: string]: ResponseItem | boolean,
-    isArray?: boolean = false
+export class Response extends ListAble {
+    [itemName: string]: ResponseItem | boolean
 }
 
 
 /** 响应实体项 */
-export class ResponseItem {
+export class ResponseItem extends ListAble{
     /** java类型 */
     type: Type;
     /** 子实体 */

@@ -109,4 +109,14 @@ export class Util {
         return annotationList + " ";
     }
 
+
+    /**
+     * 转为List
+     * @param origin 原始字符串
+     * @param isList 是否为List
+     */
+    public static wrapList(origin: string, isList: boolean = false) {
+        return isList ? `List<${origin}>` : origin
+    }
+
 }

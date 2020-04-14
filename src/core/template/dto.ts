@@ -16,6 +16,7 @@ package ${info.package};
 
 import lombok.Data;
 import javax.validation.constraints.*;
+import java.util.*;
 
 /**
  * ${info.desc}请求参数实体
@@ -37,14 +38,14 @@ ${this.renderParamList(data as Request)}
         let paramContent: string = "";
         for (const paramName in request) {
             //TODO 数组需要额外处理,先跳过
-            if (paramName == "isArray") continue;
+            if (paramName == "isList") continue;
             const param = request[paramName] as Param
             //生成field信息
             paramContent += `
     /**
      * ${param.desc}
      */${Util.getAnnotationByValid(param.valid, paramName, "\n    ", true)}
-    private ${param.sub ? Util.firstLetter2UpperCase(paramName) : param.type} ${paramName};\n`
+    private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type,param.isList)} ${paramName};\n`
             if (param.sub) {
                 const sub = param.sub
                 paramContent += `

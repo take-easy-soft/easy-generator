@@ -16,6 +16,7 @@ export class VORender implements Render {
 package ${info.package};
 
 import lombok.Data;
+import java.util.*;
 
 /**
  * ${info.desc}请求响应实体
@@ -37,14 +38,14 @@ ${this.renderParamList(data as Response)}
         let paramContent: string = "";
         for (const paramName in response) {
             //TODO 数组需要额外处理,先跳过
-            if (paramName == "isArray") continue;
+            if (paramName == "isList") continue;
             const param = response[paramName] as Param
             //生成field信息
             paramContent += `
     /**
      * ${param.desc}
      */
-    private ${param.sub ? Util.firstLetter2UpperCase(paramName) : param.type} ${paramName};\n`
+    private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type,param.isList)} ${paramName};\n`
             if (param.sub) {
                 const sub = param.sub
                 paramContent += `
