@@ -1,7 +1,8 @@
 import express = require('express');
 import * as fs from 'fs';
-import { Controller } from '../type/controller';
+import { Controller, ClassInfo } from '../type/controller';
 import { Util as util, Util } from "./util";
+import { DtoRender } from './template/dto';
 
 //模板
 const controllerTemplate = __dirname + '/../../res/views/ControllerClass.java.ejs';
@@ -20,9 +21,9 @@ export class Generator {
      * @param data Controller数据
      */
     public genrate(data: Controller) {
-        this.generateController(data)
+        // this.generateController(data)
         this.generateDto(data)
-        this.generateVo(data)
+        // this.generateVo(data)
         console.log("generate end.")
     }
 
@@ -44,15 +45,12 @@ export class Generator {
             if (api.request) {
                 for (const variable in api.request) {
                     if (variable == "body" || variable == "queryParam") {
-                        this.render(dtoTemplate, {
-                            paramList: api.request[variable],
-                            info: {
-                                name: api.name,
-                                desc: api.desc,
-                                author: data.author,
-                                package: data.package
-                            }
-                        }, `${this.path.dto}/${this.firstLetter2UpperCase(api.name)}DTO.java`)
+                        fs.writeFileSync(`${this.path.dto}/${this.firstLetter2UpperCase(api.name)}DTO.java`, new DtoRender().render({
+                            name: api.name,
+                            desc: api.desc,
+                            author: data.author,
+                            package: data.package
+                        }, api.request[variable]))
                     }
                 }
             }
@@ -110,4 +108,8 @@ export class Generator {
         fs.mkdirSync(this.path.vo)
     }
 
+}
+
+export interface Render {
+    render(classInfo: ClassInfo, data: any): string;
 }

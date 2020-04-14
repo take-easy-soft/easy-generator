@@ -1,7 +1,10 @@
 import { Valid } from "./valid";
 
-export interface Controller {
-    /** ControlerName */
+/**
+ * class基础信息
+ */
+export class ClassInfo {
+    /** ClassName */
     name: string;
     /** 包名 */
     package: string
@@ -10,6 +13,9 @@ export interface Controller {
     /** 创建者 */
     author: string;
     /** 默认路径 */
+}
+
+export class Controller extends ClassInfo{
     path: string;
     /** api列表 */
     apis: Api[]
@@ -22,7 +28,7 @@ export interface Controller {
 /**
  * 请求实体
  */
-export interface Api {
+export class Api {
     /**
      * 请求方法名称
      */
@@ -68,16 +74,19 @@ export enum ApiType {
 /**
  * 请求实体
  */
-export interface Request {
-    [paramName: string]: Param
+export class Request {
+    [paramName: string]: Param | boolean,
+    isArray?: boolean = false
 }
 
 /**
  * 请求实体参数
  */
-export interface Param {
+export class Param {
     /** Java类型 */
-    type: string;
+    type: Type;
+    /** 子实体 */
+    sub?: Request;
     /** 参数注释 */
     desc: string;
     /** 
@@ -90,15 +99,23 @@ export interface Param {
 /**
  * 响应实体
  */
-export interface Response {
-    [itemName: string]: ResponseItem
+export class Response {
+    [itemName: string]: ResponseItem | boolean,
+    isArray?: boolean = false
 }
 
 
 /** 响应实体项 */
-export interface ResponseItem {
+export class ResponseItem {
     /** java类型 */
-    type: string;
+    type: Type;
+    /** 子实体 */
+    sub?: Response;
     /** 注释 */
     desc: string;
+}
+
+export enum Type {
+    string = "String", Date = "Date", int = "Integer", long = "Long", boolean = "Boolean", number = "Integer",
+    double = "Double", float = "Float", object = "Object"
 }

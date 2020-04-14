@@ -1,5 +1,5 @@
 {
-    "$schema": "http://engineering.etmcn.com:11000/etm-pro/document/raw/master/settings/schema.json",
+    "$schema": "./schema.json",
     "name": "Test",
     "desc": "测试Controler",
     "package": "com.etm.test",
@@ -13,12 +13,13 @@
             "method": "GET",
             "request": {
                 "pathVar": {
-                    "test":{
-                        "desc": "sdf",
-                        "type": ""
+                    "test": {
+                        "type": "Object",
+                        "desc": "数据实体",
+                        "valid": []
                     },
                     "organizationId": {
-                        "type": "Integer",
+                        "type": "Long",
                         "desc": "名称",
                         "valid": [
                             {
@@ -34,7 +35,7 @@
                 },
                 "queryParam": {
                     "name": {
-                        "type": "String",
+                        "type": "Integer",
                         "desc": "姓名",
                         "valid": {
                             "type": "NotEmpty"
@@ -43,6 +44,17 @@
                     "age": {
                         "type": "Integer",
                         "desc": "年龄"
+                    },
+                    "inner":{
+                        "type": "Object",
+                        "desc": "内部实体",
+                        "sub": {
+                            "isArray": false,
+                            "name":{
+                                "desc": "姓名",
+                                "type": "String"
+                            }
+                        }
                     }
                 }
             },

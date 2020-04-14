@@ -1,4 +1,4 @@
-import { ApiType, Controller } from "../type/controller";
+import { ApiType, Controller, Type } from "../type/controller";
 import { ValidType } from "../type/valid";
 
 export default {
@@ -17,7 +17,7 @@ export default {
             request: {
                 pathVar: {
                     organizationId: {
-                        type: "Integer",
+                        type: Type.int,
                         desc: "名称",
                         valid: [{
                             type: ValidType.PATTERN,
@@ -27,22 +27,22 @@ export default {
                     }
                 }, queryParam: {
                     name: {
-                        type: "String",
+                        type: Type.string,
                         desc: "姓名",
                         valid: {
                             type: ValidType.NOT_EMPTY
                         }
                     },
                     age: {
-                        type: "Integer",
+                        type: Type.int,
                         desc: "年龄"
                     }
                 }
             },
             response: {
                 body: {
-                    result: { type: "String", desc: "结果" },
-                    message: { type: "String", desc: "附带详情" }
+                    result: { type: Type.string, desc: "结果" },
+                    message: { type: Type.string, desc: "附带详情" }
                 }
             }
         },
@@ -54,7 +54,7 @@ export default {
             request: {
                 body: {
                     organizationId: {
-                        type: "String",
+                        type: Type.string,
                         desc: "组织ID",
                         valid: [
                             { type: ValidType.PATTERN, regexp: "\\w{5}", message: "organizationId长度必须是5" },
@@ -70,7 +70,7 @@ export default {
             response: {
                 body: {
                     result: {
-                        type: "String",
+                        type: Type.string,
                         desc: "结果"
                     }
                 }

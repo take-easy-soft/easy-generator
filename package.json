@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "代码生成器",
   "repository": "https://github.com/take-easy-soft/easy-generator",
-  "main": "export.js",
+  "main": "dist/main.js",
   "dependencies": {
     "ejs": "^3.0.2",
     "express": "^4.17.1",
@@ -26,7 +26,7 @@
     "generate": "npm run compile && npm run start",
     "debug": "nodemon --inspect ./dist/main.js",
     "start": "node dist/main.js ",
-    "schema": "typescript-json-schema --titles --id etmgen --refs false --required \"./src/type/*.ts\" Controller>res/schema.json"
+    "schema": "typescript-json-schema --refs true --required \"./src/type/*.ts\" Controller>res/schema.json"
   },
   "author": "",
   "license": "ISC"
