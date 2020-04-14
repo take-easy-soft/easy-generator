@@ -2,7 +2,8 @@ import express = require('express');
 import * as fs from 'fs';
 import { Controller, ClassInfo } from '../type/controller';
 import { Util as util, Util } from "./util";
-import { DtoRender } from './template/dto';
+import { DTORender } from './template/dto';
+import { VORender } from './template/vo';
 
 //模板
 const controllerTemplate = __dirname + '/../../res/views/ControllerClass.java.ejs';
@@ -23,7 +24,7 @@ export class Generator {
     public genrate(data: Controller) {
         // this.generateController(data)
         this.generateDto(data)
-        // this.generateVo(data)
+        this.generateVo(data)
         console.log("generate end.")
     }
 
@@ -45,7 +46,7 @@ export class Generator {
             if (api.request) {
                 for (const variable in api.request) {
                     if (variable == "body" || variable == "queryParam") {
-                        fs.writeFileSync(`${this.path.dto}/${this.firstLetter2UpperCase(api.name)}DTO.java`, new DtoRender().render({
+                        fs.writeFileSync(`${this.path.dto}/${this.firstLetter2UpperCase(api.name)}DTO.java`, new DTORender().render({
                             name: api.name,
                             desc: api.desc,
                             author: data.author,
@@ -62,15 +63,12 @@ export class Generator {
             if (api.request) {
                 for (const variable in api.response) {
                     if (variable == "body") {
-                        this.render(voTemplate, {
-                            paramList: api.response[variable],
-                            info: {
-                                name: api.name,
-                                desc: api.desc,
-                                author: data.author,
-                                package: data.package
-                            }
-                        }, `${this.path.vo}/${this.firstLetter2UpperCase(api.name)}VO.java`)
+                        fs.writeFileSync(`${this.path.vo}/${this.firstLetter2UpperCase(api.name)}VO.java`, new VORender().render({
+                            name: api.name,
+                            desc: api.desc,
+                            author: data.author,
+                            package: data.package
+                        }, api.response[variable]))
                     }
                 }
             }
