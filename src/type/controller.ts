@@ -19,7 +19,7 @@ export class Controller extends ClassInfo {
     /**
      * 定义类型, 用于请求或响应复用
      */
-    definitions: Bean[];
+    definitions?: Bean[];
     path: string;
     /** api列表 */
     apis: Api[]

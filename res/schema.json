@@ -200,6 +200,13 @@
             "description": "创建者",
             "type": "string"
         },
+        "definitions": {
+            "description": "定义类型, 用于请求或响应复用",
+            "items": {
+                "$ref": "#/definitions/Bean"
+            },
+            "type": "array"
+        },
         "desc": {
             "description": "Controller注释",
             "type": "string"
@@ -219,11 +226,6 @@
             "description": "暂时无用",
             "type": "string"
         },
-        "typeList": {
-            "items": {
-            },
-            "type": "array"
-        },
         "userType": {
             "description": "暂时无用",
             "type": "string"
@@ -235,8 +237,7 @@
         "desc",
         "name",
         "package",
-        "path",
-        "typeList"
+        "path"
     ],
     "type": "object"
 }
