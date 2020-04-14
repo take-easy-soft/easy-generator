@@ -3,7 +3,9 @@ import { Generator } from './core/generator';
 import * as fs from 'fs';
 import { Controller } from './type/controller';
 
-const version = "1.1.3";
+const pjson = require('../package.json');
+
+const version = pjson.version;
 const args = process.argv.slice(2);
 const input = args[0];
 if (input && input.toLowerCase() == "new") {

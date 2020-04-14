@@ -16,7 +16,7 @@
                     "isList": false,
                     "name": {
                         "desc": "姓名",
-                        "type": "String",
+                        "type": "Object",
                         "valid": [
                             {
                                 "type": "NotNull"

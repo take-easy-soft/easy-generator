@@ -7,8 +7,6 @@ import { VORender } from './template/vo';
 
 //模板
 const controllerTemplate = __dirname + '/../../res/views/ControllerClass.java.ejs';
-const dtoTemplate = __dirname + '/../../res/views/Dto.java.ejs';
-const voTemplate = __dirname + '/../../res/views/Vo.java.ejs';
 
 export class Generator {
     private path: { controller: string; dto: string; vo: string; };
@@ -37,7 +35,13 @@ export class Generator {
 
 
     private generateController(data: Controller) {
-        this.render(controllerTemplate, { data: data }, `${this.path.controller}/${this.firstLetter2UpperCase(data.name)}Controller.java`)
+        this.app.render(controllerTemplate, { data: data, util }, async (err, str) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            fs.writeFileSync(`${this.path.controller}/${this.firstLetter2UpperCase(data.name)}Controller.java`, str.trim());
+        });
 
     }
 
@@ -73,21 +77,6 @@ export class Generator {
                 }
             }
         }
-    }
-
-    private render(template: string, data: any, generatePath: string) {
-
-        if (!generatePath) throw new Error("路径不可为空!");
-
-        // return new Promise(resolve => {
-        this.app.render(template, { ...data, util }, async (err, str) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            fs.writeFileSync(generatePath, str.trim());
-        });
-        // })
     }
 
     /**

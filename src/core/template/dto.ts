@@ -44,12 +44,13 @@ ${this.renderParamList(data as Request)}
             paramContent += `
     /**
      * ${param.desc}
-     */${Util.getAnnotationByValid(param.valid, paramName, "\n    ", true)}
+     */${param.sub?"\n    @Valid":Util.getAnnotationByValid(param.valid, paramName, "\n    ", true)}
     private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type, param.isList)} ${paramName};\n`
             //复杂类型, 生成内部类, 因为ejs递归会死循环, 只能使用字符串重构
             if (param.sub) {
                 const sub = param.sub
                 paramContent += `
+    @Data
     public static class ${Util.firstLetter2UpperCase(paramName)}{
         ${this.renderParamList(sub)}
     } 

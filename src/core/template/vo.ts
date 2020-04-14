@@ -50,6 +50,7 @@ ${this.renderParamList(data as Response)}
             if (param.sub) {
                 const sub = param.sub
                 paramContent += `
+    @Data
     public static class ${Util.firstLetter2UpperCase(paramName)}{
         ${this.renderParamList(sub)}
     } 
