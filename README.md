@@ -6,6 +6,8 @@
 1. npm install -g etmgen
 2. 打开控制台, 执行etmgen new, 这会在当前工作目录创建tempalte.json
 3. 执行etmgen tempalte.json, 开始生成, 文件在当前工作目录的generate
+4. 修改template.json为你的数据, 重复第三步
+
 
 **开发**
 1. npm run watch, 启动监听程序, 自动监听变动并进行编译, 这可加快开发速度
