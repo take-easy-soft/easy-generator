@@ -13,7 +13,7 @@ export class VORender implements Render {
     render(info: ClassInfo, data: any): string {
         // 构建类信息
         return `
-package ${info.package};
+package ${info.package}.vo;
 
 import lombok.Data;
 import java.util.*;
@@ -46,6 +46,7 @@ ${this.renderParamList(data as Response)}
      * ${param.desc}
      */
     private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type,param.isList)} ${paramName};\n`
+            //复杂类型, 生成内部类
             if (param.sub) {
                 const sub = param.sub
                 paramContent += `

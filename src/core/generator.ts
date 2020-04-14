@@ -22,7 +22,7 @@ export class Generator {
      * @param data Controller数据
      */
     public genrate(data: Controller) {
-        // this.generateController(data)
+        this.generateController(data)
         this.generateDto(data)
         this.generateVo(data)
         console.log("generate end.")

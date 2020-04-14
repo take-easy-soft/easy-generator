@@ -8,10 +8,11 @@
     var managerDefinition = managerClassName + " " + managerVarName;
 %>
 <%# 定义包名 %>
-package <%=data.package%>;
+package <%=data.package%>.controller;
 
 import javax.validation.constraints.*;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 /**
  * <%=data.desc%>

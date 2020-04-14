@@ -16,6 +16,7 @@ export class ClassInfo {
 }
 
 export class ListAble {
+    /** 是否为List, 只适用于根级属性 */
     isList?: boolean = false
 }
 

@@ -2,6 +2,7 @@
     let api = data;
     let paramClassPrefix = util.firstLetter2UpperCase(api.name);
     let params = [];
+    let responseIsList=api.response.body.isList;
     let paramDescList = [];
     if(api.request){
         let pathVar = api.request.pathVar;
@@ -16,18 +17,20 @@
         
         // 处理路径参数
         if(hasPathVar){
-            params.push(...Object.keys(pathVar).map(name => util.getAnnotationByValid(pathVar[name].valid,name," ") + `@PathVariable ${pathVar[name].type} ${name}`));
+            params.push(...Object.keys(pathVar).map(name => "@PathVariable "+util.getAnnotationByValid(pathVar[name].valid,name," ") + `${pathVar[name].type} ${name}`));
             paramDescList.push(...Object.keys(pathVar).map(name => ({name,desc:pathVar[name].desc})));
         }
 
         // 如果queryParam和requestBody只存在一个，则DTO的名称为api.name+DTO
         // 如果两者都存在，则两个DTO的名称分别为api.name+ParamDTO、api.name+BodyDTO
         if(hasQueryParam){
-            params.push("@Valid " + paramClassPrefix + (hasQueryParamAndBody?"ParamDTO paramDTO":"DTO dto"));
+            const typeName=paramClassPrefix + (hasQueryParamAndBody?"ParamDTO":"DTO");
+            params.push("@Valid " + util.wrapList(typeName,queryParam.isList)+" "+util.firstLetter2LowerCase(typeName));
             paramDescList.push({name:hasQueryParamAndBody?"paramDTO":"dto",desc:hasQueryParamAndBody?"查询参数":"入参"});
         }
         if(hasRequestBody){
-            params.push("@Valid @RequestBody " + paramClassPrefix + (hasQueryParamAndBody?"BodyDTO bodyDTO":"DTO dto"));
+            const typeName=paramClassPrefix + (hasQueryParamAndBody?"BodyDTO":"DTO");
+            params.push("@Valid @RequestBody " + util.wrapList(typeName,requestBody.isList)+" "+util.firstLetter2LowerCase(typeName));
             paramDescList.push({name:hasQueryParamAndBody?"bodyDTO":"dto",desc:hasQueryParamAndBody?"请求体参数":"入参"});
         }
     }
@@ -38,7 +41,7 @@
      <%-"* @param " + paramDesc.name + " " + paramDesc.desc;%><%});%>
      * @return
      */
-    public <%=paramClassPrefix+"VO"%> <%=api.name%>(<%-params.join(", ")%>){
+    public <%-util.wrapList(paramClassPrefix+"VO",responseIsList)%> <%=api.name%>(<%-params.join(", ")%>){
         // TODO 未实现
         return null;
     }

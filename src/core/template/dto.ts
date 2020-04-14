@@ -12,7 +12,7 @@ export class DTORender implements Render {
     render(info: ClassInfo, data: any): string {
         // 构建类信息
         return `
-package ${info.package};
+package ${info.package}.dto;
 
 import lombok.Data;
 import javax.validation.constraints.*;
@@ -45,7 +45,8 @@ ${this.renderParamList(data as Request)}
     /**
      * ${param.desc}
      */${Util.getAnnotationByValid(param.valid, paramName, "\n    ", true)}
-    private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type,param.isList)} ${paramName};\n`
+    private ${Util.wrapList(param.sub ? Util.firstLetter2UpperCase(paramName) : param.type, param.isList)} ${paramName};\n`
+            //复杂类型, 生成内部类, 因为ejs递归会死循环, 只能使用字符串重构
             if (param.sub) {
                 const sub = param.sub
                 paramContent += `
