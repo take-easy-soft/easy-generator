@@ -48,7 +48,7 @@ export class Util {
      * @param separator 多个参数实体信息之间的分隔符
      * @param atFirst 第一行是否使用分隔符
      */
-    public static getAnnotationByValid(validParam: Valid | Valid[], paramName: string, separator: string,atFirst=false): string {
+    public static getAnnotationByValid(validParam: Valid | Valid[], paramName: string, separator: string, atFirst = false): string {
         if (!validParam) {
             return "";
         }
@@ -90,6 +90,9 @@ export class Util {
                     annotation = `@${valid.type}(${valid.min ? "min=" + valid.min + "," : ""}${valid.max ? "max=" + valid.max + "," : ""}`;
                     if (!valid.message) valid.message = `参数${paramName}大小超过限制!`
                     break;
+                default:
+                    annotation = `unsupport valid ${valid.type}`
+                    break;
             }
             if (annotation) {
                 annotation += `message="${valid.message}")`;
@@ -103,7 +106,7 @@ export class Util {
             annotationList += annotation
         }
 
-        return annotationList+" ";
+        return annotationList + " ";
     }
 
 }
